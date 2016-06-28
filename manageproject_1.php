@@ -1,7 +1,11 @@
 <?php 
 session_start();
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 include('Classes/connection_pdo.php');
+
 
 $_SESSION['ro10app'] = "puwadon.sa@jasmine.com";
 
@@ -17,6 +21,9 @@ $db = new DB();
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<title>Bootstrap 101 Template</title>
+
+	<!--CSS Cutom กำหนดค่าเอง-->
+	<link rel="stylesheet" href="css_custom/custom.css"> 
 
 	<!-- Datatable CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.css">  
@@ -50,7 +57,7 @@ $db = new DB();
   	<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
   	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
   	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
-  	<script type="text/javascript" src="js/jquery.checkAll.js"></script>
+  	<script type="text/javascript" src="media/js/jquery.checkAll.js"></script>
 	<script>
     	$(document).ready(function(){
 
@@ -80,6 +87,12 @@ $db = new DB();
 	        var table = $('#example').DataTable({
 	        	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 		      	'order': [[1, 'asc']],
+		      	'columnDefs': [{
+		            'targets': 0,
+		            'searchable': false,
+		            'orderable': false,
+		            'width': '1%'
+		         }]
 	    	});
 	    	
 	  	});
@@ -90,54 +103,7 @@ $db = new DB();
 
 	</script>
 	<style>
-    .bg-white{
-      background-color: #FFFFFF;
-    }
-    .logo-box{
-      height: 27px;
-
-    }
-    .search-button{
-      padding-top: 23px;
-    }
-    .margin-side{
-      margin: 0px 15px;
-    }
-    thead{
-      background-color:white;
-  	}
-  	.navbar-fixed {
-    	top: 0;
-    	z-index: 100;
-	  	position: fixed;
-	    width: 100%;
-  	}
-  	#nav_bar {
-    	border: 0;
-    	background-color: #ffffff;
-    	border-radius: 0px;
-    	margin-bottom: 0;
-  	}
-  	td.details-control {
-        background: url('images/resources/open.png') no-repeat center center;
-        cursor: pointer;
-    }
-    tr.shown td.details-control {
-        background: url('images/resources/close.png') no-repeat center center;
-    }
-    .padding-small{
-      padding: 15px;
-    }
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-    table.dataTable.select tbody tr,
-    table.dataTable thead th:first-child {
-      	cursor: pointer;
-    }
-    #footer {
+		#footer {
 	    position: fixed;
 	    left: 0px;
 	    bottom: 0px;
@@ -147,19 +113,19 @@ $db = new DB();
 	    background-color: #FFEBEE;
 	    z-index: 1000;
 	    color:gray;
-    }
-
-    /* IE 6 */
-    * html #footer {
-       	position:absolute;
-       	top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
-    }
-
-  </style>
+    	}
+	</style>
 </head>
 <body>
 	<?php include('header.php') ?>
+	<?php 
+		
+		if(isset($_POST["sale_id"])){
+    		$sale_id = $_POST["sale_id"];
+    	}
+    	$sale_id = $_POST["sale_id"];
 
+	 ?>
   	<form action="update_manageproject.php" method="post" role="form" autocomplete="off"  accept-charset="utf-8">
   	<div class="container-fluid">
 	    <div class="row">
@@ -172,14 +138,15 @@ $db = new DB();
 	            		<table id="example" class="display table table-striped table-bordered" width="100%" cellspacing="0">
 			              	<thead>
 				              	<tr>
+				              		<th></th>
 				              		<th align='center' style="max-width:90px;">Location code</th>
-				              		<th align='center' style="max-width:120px;">Location</th>
-				              		<th align='center' >ชื่อโครงการ</th>
-				              		<th align='center' style="max-width:90px;">จังหวัด</th>
-				              		<th align='center' style="max-width:90px;">เขต/อำเภอ</th>
-				              		<th align='center' style="max-width:90px;">แขวง/ตำบล</th>
-				              		<th align='center' >ที่อยู่</th>
-				              		<th align='center' style="max-width:75px;">ประเภท</th>
+				                  	<th align='center' style="max-width:120px;">Location</th>
+				                  	<th align='center' >ชื่อโครงการ</th>
+				                  	<th align='center' style="max-width:90px;">จังหวัด</th>
+				                  	<th align='center' style="max-width:90px;">เขต/อำเภอ</th>
+				                  	<th align='center' style="max-width:90px;">แขวง/ตำบล</th>
+				                  	<th align='center' >ที่อยู่</th>
+				                  	<th align='center' style="max-width:75px;">ประเภท</th>
 				              	</tr>
 			              	</thead>              
 			              	<tbody>
@@ -189,16 +156,15 @@ $db = new DB();
 			                		$get_id_post = $_POST["checkboxlist"];
 			                	}
 			                	
+			                	
 			                	//for($i=0;$i<count($_POST["checkboxlist"]);$i++){
 								foreach ($get_id_post as $get_id) {
-										
-									
-
 									$sql = "SELECT * FROM project WHERE id = :id ";
 				                  	$query = $db->query($sql);
 				                  	$query = $db->bind(':id', $get_id );
 				                  	$query = $db->execute();
 				                  	$query = $db->fetch();
+				                  	$count = $db->rowCount();
 									
 									if(!empty(trim($get_id))){
 										//echo "checkboxlist $i = " .$get_id_post[$i]."<br>";
@@ -221,6 +187,9 @@ $db = new DB();
 					                      $status = $result["status"] ;
 					        		?>
 					        		<tr>
+					        			<td>
+					        				<input type="checkbox" name="project_id[]" checked="true"  id="project_id" value="<?php  echo $id ;?>"  >
+					        			</td>
 					                  <td>
 					                    <?php echo $location_code;?></td>
 					                  <td>
@@ -238,15 +207,18 @@ $db = new DB();
 					                  <td>
 					                    <?php echo $type;?></td>
 					                </tr>
-
+									
 					        		<?php }
 									}	
 								}
 			                    
 			                ?>
 							</tbody>
+							
 			              	<tfoot>
+			              		<?php  ?>
 			                	<tr>
+			                		<th></th>
 				                  	<th align='center' style="max-width:90px;">Location code</th>
 				                  	<th align='center' style="max-width:120px;">Location</th>
 				                  	<th align='center' >ชื่อโครงการ</th>
@@ -257,6 +229,7 @@ $db = new DB();
 				                  	<th align='center' style="max-width:75px;">ประเภท</th>
 			                	</tr>
 			              	</tfoot>
+
 	            		</table>
 	          		</div>
 	        	</div>
@@ -265,27 +238,56 @@ $db = new DB();
   	</div>
   	<footer id="footer" class="navbar navbar-default">
 	    <div class="container-fluid">
-	      	<div class="col-lg-6">
+	      	<div class="col-lg-8">
 		        <div class="form-group form-inline">
-		          	<label style="margin-right:15px;">
-		            ผู้รับผิดชอบโครงการ
-		            <input type="text" class="form-control input-md" value="นายณรงค์ศักดิ์ วงเดช" placeholder="ชื่อผู้รับผิดชอบ" readonly />  
-		          	</label>
-		          	&nbsp;&nbsp;
-		          	
-		            <label style="margin-right:15px;">รหัสพนักงาน</label>
-		            <input type="text" class="form-control input-md" value="11233" placeholder="ชื่อผู้รับผิดชอบ" readonly />  
+		        <?php if(!empty($sale_id)) {
+
+		        		include_once('Classes/connection_mysqli_sales.php');
+
+		        		$sql_sale = "SELECT * FROM rx_user WHERE user_code ='".$sale_id."' ";
+	                  	
+	                  	$row_sale = mysqli_query($conn, $sql_sale);
+
+	                  	while($row = mysqli_fetch_assoc($row_sale)) {
+	                  		$user_code = $row["user_code"];
+	                  		$user_name = $row["user_name"];
+	                  	
+	            ?>
+		            	<label style="margin-right:15px;">
+			            ผู้รับผิดชอบโครงการ
+			            <input type="text" name="sale_name" class="form-control input-md" value="<?php echo $user_name ; ?>" placeholder="ชื่อผู้รับผิดชอบ" readonly />  
+			          	</label>
+			          	&nbsp;&nbsp;
+			          	
+			            <label style="margin-right:15px;">รหัสพนักงาน</label>
+			            <input type="text" name="sale_id" class="form-control input-md" value="<?php echo $user_code; ?>" placeholder="ชื่อผู้รับผิดชอบ" readonly />  
+		        <?php 
+		        		}
+		        	}else { ?>
+		        		<label style="margin-right:15px;">
+			            ผู้รับผิดชอบโครงการ
+			            <input type="text" name="sale_name" class="form-control input-md" value="" placeholder="ชื่อผู้รับผิดชอบ" readonly />  
+			          	</label>
+			          	&nbsp;&nbsp;
+			          	
+			            <label style="margin-right:15px;">รหัสพนักงาน</label>
+			            <input type="text" name="sale_id" class="form-control input-md" value="" placeholder="รหัสพนักงาน" readonly />  
+		        <?php
+		        	}
+
+		        ?>
 		        </div>
 		    </div>
 
-	      	<div class="col-lg-6">
+	      	<div class="col-lg-4">
 	        	<ul class="nav navbar-nav navbar-right">
 	          		<li>
 	          			<button class="btn btn-default" onclick="goBack()" style="width:120px;">ย้อนกลับ</button>
-	            		<input type="submit" class="btn btn-success" style="width:120px;" value="submit" />  
+	            		<input type="submit" name="submit" class="btn btn-success" style="width:120px;" value="submit" />  
 	          		</li>
 	        	</ul>
 	      	</div>
+	      	<?php mysqli_close($conn); ?>
 	    </div>
   	</footer>
   	</form>

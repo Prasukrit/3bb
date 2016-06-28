@@ -22,7 +22,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<title>Bootstrap 101 Template</title>
-	<!-- Datatable CSS -->
+
+      <!--CSS Cutom กำหนดค่าเอง-->
+      <link rel="stylesheet" href="css_custom/custom.css">
+
+	     <!-- Datatable CSS -->
 	  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.css">  
 	  	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css">  
 	  	<link rel="stylesheet" charset="utf8" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">  
@@ -33,8 +37,6 @@
 	  	<link href="lumen/bootstrap.css" rel="stylesheet">  
 	  	<link href="2/css/font-awesome.min.css" rel="stylesheet">  
 	  	<link href="2/css/bootswatch.css" rel="stylesheet">  
-    <!--CSS Cutom กำหนดค่าเอง-->
-    <link rel="stylesheet" href="css_custom/custom.css"> 
 
 	  <!-- JQUERY -->  
 	  	<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.12.3.js"></script>
@@ -59,12 +61,11 @@
       <script type="text/javascript" src="media/js/jquery.checkAll.js"></script>
 		<script>
       
-      
-
 			$(document).ready(function(){
 
-        /* checkbox #1 */
-      var checker = document.getElementById('checkboxlist');
+        var buttoncheck = document.getElementById('button-check');
+
+        var checker = document.getElementById('checkboxlist');
         
         $('#general i .counter').text('  ');
 
@@ -153,19 +154,6 @@
       }
    
 	</script>
-	<style>
-     #footer {
-      position: fixed;
-      left: 0px;
-      bottom: 0px;
-      height: 45px;
-      width: 100%;
-      margin-bottom: -1px;
-      background-color: #FFEBEE;
-      z-index: 1000;
-      color:gray;
-    }
-  </style>
 </head>
 <body>
 	<?php 
@@ -195,15 +183,17 @@
                     <input type="checkbox" class="check_all" />
                   </th>
                   <th align='center' style="max-width:90px;">Location code</th>
-                  <th align='center' style="max-width:120px;">พิกัด</th>
+                  <th align='center' style="max-width:120px;">Location</th>
                   <th align='center' >ชื่อโครงการ</th>
+                  <th align='center' style="max-width:90px;">จังหวัด</th>
+                  <th align='center' style="max-width:90px;">เขต/อำเภอ</th>
+                  <th align='center' style="max-width:90px;">แขวง/ตำบล</th>
                   <th align='center' >ที่อยู่</th>
-                  <th align='center' style="max-width:85px;">เขต/อำเภอ</th>
-                  <th align='center' style="max-width:80px;">จังหวัด</th>
                   <th align='center' style="max-width:75px;">ประเภท</th>
                 </tr>
               </thead>
               <tbody id="general-content">
+                
                 <?php
                     foreach ($query as $key=> $result) {
                       
@@ -224,8 +214,12 @@
                     
                     ?>
                 <tr>
+
                   <td style="width: 20px;" align="center">
-                    <input type="checkbox" name="checkboxlist[]" class="check" value="<?php echo $id; ?>"></td>
+                  
+                    <input type="checkbox" id="checkboxlist" name="checkboxlist[]" value="<?php echo $id; ?>" />
+                  </div>
+                  </td>
                   <td>
                     <?php echo $location_code;?></td>
                   <td>
@@ -233,11 +227,13 @@
                   <td>
                     <?php echo $project_name; ?></td>
                   <td>
-                    <?php echo $address; ?></td>
-                  <td>
                     <?php echo $province; ?></td>
                   <td>
-                    <?php echo $district; ?></td>                  
+                    <?php echo $district; ?></td>
+                  <td>
+                    <?php echo $sub_district; ?></td>
+                  <td>
+                    <?php echo $address; ?></td>
                   <td>
                     <?php echo $type;?></td>
                 </tr>
@@ -249,17 +245,18 @@
                   <th>
                     <div id="general">
                       <i>
-                          <span class="counter" style="color:orange;"></span>
+                          <span class="counter" style="color:green;"></span>
                       </i>
                     </div>
                   </th>
-                  <th align='center' >Location code</th>
-                  <th align='center' >พิกัด</th>
+                  <th align='center' style="max-width:90px;">Location code</th>
+                  <th align='center' style="max-width:120px;">Location</th>
                   <th align='center' >ชื่อโครงการ</th>
+                  <th align='center' style="max-width:90px;">จังหวัด</th>
+                  <th align='center' style="max-width:90px;">เขต/อำเภอ</th>
+                  <th align='center' style="max-width:90px;">แขวง/ตำบล</th>
                   <th align='center' >ที่อยู่</th>
-                  <th align='center' >เขต/อำเภอ</th>
-                  <th align='center' >จังหวัด</th>
-                  <th align='center' >ประเภท</th>
+                  <th align='center' style="max-width:75px;">ประเภท</th>
                 </tr>
               </tfoot>
 
@@ -284,7 +281,7 @@
             <label style="margin-right:15px;">
               ผู้รับผิดชอบโครงการ
               
-              <select name="sale_id" class="form-control input-md"  id="sale_id" required="">
+              <select name="sale_id" class="form-control input-sm"  id="sale_id" required="">
                 <option  value="" >-- เลือกผู้รับผิดชอบโครงการ --</option>
                 <?php while($row = mysqli_fetch_assoc($row_sale)) {
                   $user_name = $row["user_name"];
@@ -300,9 +297,20 @@
           &nbsp;&nbsp;
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <input type="submit" id="btncheck" class="btn btn-success" style="width:120px;" value="เลือก" />        
-            </li>
+            <input type="submit" id="btncheck" name="btncheck" class="btn btn-success btn-sm"  style="width:120px;" value="เลือก"   /> 
+           </li>
           </ul>
+          <script type="text/javascript">
+            $(function(){  
+               $("#checkboxlist").click(function(){ // เมื่อคลิกที่ checkbox id=i_accept  
+                   if($(this).attr("checked")=="checked"){ // ถ้าเลือก  
+                       $("#btncheck").removeAttr("disabled"); // ให้ปุ่ม id=continue_bt ทำงาน สามารถคลิกได้  
+                   }else{ // ยกเลิกไม่ทำการเลือก  
+                       $("#btncheck").attr("disabled","disabled");  // ให้ปุ่ม id=continue_bt ไม่ทำงาน  
+                   }  
+               });  
+            });  
+          </script>
         </div>
       </div>
     </div>

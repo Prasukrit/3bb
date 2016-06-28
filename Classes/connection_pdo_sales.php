@@ -1,6 +1,6 @@
  <?php
 date_default_timezone_set("Asia/Bangkok");
-class DB{
+class DB_SALE{
     private static $_instance = null;
     private $host      = "localhost";
     private $user      = "root";

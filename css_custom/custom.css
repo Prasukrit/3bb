@@ -1,0 +1,48 @@
+.bg-white{
+      background-color: #FFFFFF;
+    }
+    .logo-box{
+      height: 27px;
+
+    }
+    .search-button{
+      padding-top: 23px;
+    }
+    .margin-side{
+      margin: 0px 15px;
+    }
+    thead{
+      background-color:white;
+  	}
+  	.navbar-fixed {
+    	top: 0;
+    	z-index: 100;
+	  	position: fixed;
+	    width: 100%;
+  	}
+  	#nav_bar {
+    	border: 0;
+    	background-color: #ffffff;
+    	border-radius: 0px;
+    	margin-bottom: 0;
+  	}
+  	td.details-control {
+        background: url('images/resources/open.png') no-repeat center center;
+        cursor: pointer;
+    }
+    tr.shown td.details-control {
+        background: url('images/resources/close.png') no-repeat center center;
+    }
+    .padding-small{
+      padding: 15px;
+    }
+    tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+    table.dataTable.select tbody tr,
+    table.dataTable thead th:first-child {
+      	cursor: pointer;
+    }
+    

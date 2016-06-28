@@ -19,7 +19,7 @@
 			remark = '".$_POST["remark"]."' ,
 			node_nearby = '".$_POST["node_nearby"]."' ,
 			type = '".$_POST["type"]."' ,
-			status = '".$_POST["status"]."' 
+			status = '".$_POST["status"]."'
 			WHERE id = '".$_POST["id"]."' ";
 
 	$query = $db->query($sql);

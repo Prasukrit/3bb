@@ -2,6 +2,7 @@
 	session_start();
 
 	include('Classes/connection_pdo.php');
+	include_once("Classes/connection_mysqli_sales.php");
 
 	$_SESSION['ro10app'] = "puwadon.sa@jasmine.com";
 
@@ -28,8 +29,10 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<title>Bootstrap 101 Template</title>
+
+	<!--CSS Cutom กำหนดค่าเอง-->
+  	<link rel="stylesheet" href="css_custom/custom.css">
 	<!--CSS Datatables-->
 	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
@@ -61,37 +64,6 @@
     		window.history.back();
   		}
 	</script>
-	<style>
-    .bg-white{
-      background-color: #FFFFFF;
-    }
-    .logo-box{
-      height: 27px;
-
-    }
-    .search-button{
-      padding-top: 23px;
-    }
-    .margin-side{
-      margin: 0px 15px;
-    }
-    thead{
-      background-color:white;
-  }
-  .navbar-fixed {
-    top: 0;
-    z-index: 100;
-  position: fixed;
-    width: 100%;
-  }
-  #nav_bar {
-    border: 0;
-    background-color: #ffffff;
-    border-radius: 0px;
-    margin-bottom: 0;
-  }
-
-  </style>
 
 </head>
 <body class="bg-default">
@@ -210,6 +182,7 @@
 									</li>
 								</ul>
 								<div class="tab-content">
+									<!--ให้บริการ-->
 									<div class="tab-pane fade in active" id="open">
 										<div class="row">
 											<div class="col-md-6">
@@ -248,25 +221,48 @@
 													<input class="form-control" type="text" name="node_nearby" placeholder="ระบุ nodeใกล้เคียง" value="<?php echo $row['node_nearby']; ?>">
 												</div>
 											</div>
-
 										</div>
-										
+									<?php  
+									
+									$user_code = $row['sale_personal_id']; // testdb ของอีกอันนึง
+
+									// Query ของ portal 
+									$sql_sale = "SELECT * FROM rx_user where user_code ='".trim($user_code)."' limit 1 ";
+									$row_sale = mysqli_query($conn, $sql_sale);
+									while($result = mysqli_fetch_assoc($row_sale)) { ?>
+
+										<div class="row">
+											<div class="col-lg-6">
+												<div class="form-group">
+													<label for="">รหัสพนักงาน</label>
+													<input class="form-control" type="text" name="sale_personal" placeholder="รหัสพนักงาน" readonly value="<?php echo $result['user_code']; ?>" >
+												</div>
+											</div>
+											<div class="col-lg-6">
+												<div class="form-group">
+													<label for="">ผู้รับผิดชอบโครงการ</label>
+													<input class="form-control" type="text" name="sale_personal" placeholder="ชื่อผู้รับผิดชอบโครงการ" readonly <?php if(empty($result["user_code"])){
+															echo "value=''";
+														}else{
+															echo "value='".$result["user_name"]."'";
+														} ?>  
+													>
+												</div>
+											</div>
+										</div>
+										<?php } ?>
 									</div>
+									<!--/ให้บริการ -->
+									<!--ไม่ได้ให้บริการ -->
 									<div class="tab-pane fade" id="close">
 										<p><strong>ระบุมายเหตุ</strong></p><hr>
 										
-										<textarea style="text-indent:5px;" class="form-control danger" name="remark" id="" cols="30" rows="3" placeholder="ระบุหมายเหตุกำกับ"><?php echo trim($row['remark']); ?></textarea>
-      									
+										<textarea style="text-indent:5px;" class="form-control danger" name="remark" id="" cols="30" rows="3" placeholder="ระบุหมายเหตุกำกับ"><?php echo trim($row['remark2']); ?></textarea>
 									</div>
+									<!--/ไม่ได้ให้บริการ -->
 								</div>
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="form-group">
-											<label for="">ผู้รับผิดชอบโครงการ</label>
-											<input class="form-control" type="text" name="sale_personal" placeholder="นายมงคล วงศ์สุวรรณ" value="<?php echo $row['sale_personal_id']; ?>" readonly >
-										</div>
-									</div>
-								</div>
+
+								
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">

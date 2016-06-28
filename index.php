@@ -7,6 +7,9 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>โครงการติดตั้งNode3</title>
 
+  <!--CSS Cutom กำหนดค่าเอง-->
+  <link rel="stylesheet" href="css_custom/custom.css">
+
   <!-- Datatable CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css">
@@ -87,6 +90,11 @@
             "iDisplayLength": 10,
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
             "orderCellsTop": true,
+            'columnDefs': [{
+              'targets': 7,
+              'searchable': false,
+              'orderable': false
+            }],
             "scrollX": true,
             "buttons": [
                  { className:'glyphicon glyphicon glyphicon-open-file' ,extend:'excelFlash',text: '&nbsp;EXCEL'},
@@ -94,7 +102,7 @@
                  { className:'glyphicon glyphicon-print' ,extend:'print',text: '&nbsp;Print',orientation: 'landscape',filename: 'โครงการ node 3',pageSize: 'LEGAL'}
             ],
 
-            "order": [[ 1, "asc" ]]
+            "order": [[ 0, "desc" ]]
         } );
 
         //stopPropagation
@@ -122,59 +130,9 @@
                 }
             });
         }
-
-
-
     } );
 
   </script>
-
-  <style>
-    .bg-white{
-      background-color: #FFFFFF;
-    }
-    .logo-box{
-      height: 27px;
-
-    }
-    .search-button{
-      padding-top: 23px;
-    }
-    .margin-side{
-      margin: 0px 15px;
-    }
-    thead{
-      background-color:white;
-  }
-  .navbar-fixed {
-    top: 0;
-    z-index: 100;
-  position: fixed;
-    width: 100%;
-  }
-  #nav_bar {
-    border: 0;
-    background-color: #ffffff;
-    border-radius: 0px;
-    margin-bottom: 0;
-  }
-  td.details-control {
-        background: url('images/resources/open.png') no-repeat center center;
-        cursor: pointer;
-    }
-    tr.shown td.details-control {
-        background: url('images/resources/close.png') no-repeat center center;
-    }
-    .padding-small{
-      padding: 15px;
-    }
-    tfoot input {
-        width: 100%;
-        padding: 3px;
-        box-sizing: border-box;
-    }
-
-  </style>
 
 </head>
 <body>
@@ -288,109 +246,209 @@
                           // $sql = "SELECT * FROM project where status = 0";
                           // $query = mysqli_query($conn, $sql);
                       $sql = "SELECT * FROM project WHERE status = '0' ";
-                      $query = $db->
-                  query($sql);
+                      $query = $db->query($sql);
                       $query = $db->execute();
                       $query = $db->fetch();
                     ?>
                   <thead>
                     <tr>
-                      <th align='center' style="max-width:75px;">Location code</th>
+                      <th align='center' style="max-width:90px;">Location code</th>
+                      <th align='center' style="max-width:100px;">พิกัด</th>
                       <th align='center' >ชื่อโครงการ</th>
-                      <th align='center' style="max-width:90px;">จังหวัด</th>
-                      <th align='center' style="max-width:90px;">เขต/อำเภอ</th>
-                      <th align='center' style="max-width:90px;">แขวง/ตำบล</th>
-                      <th align='center' style="max-width:120px;">Location</th>
-                      <th align='center' style="max-width:140px;">Remark</th>
-                      <th align='center' style="max-width:75px;">Type</th>
-                      <th align="center" style="width:100px;" >Edit/Delete</th>
+                      <th align='center' style="max-width:70px;">เขต/อำเภอ</th>
+                      <th align='center' style="max-width:70px;">จังหวัด</th>       
+                      <th align='center' style="max-width:110px;">ผู้จัดสรรโครงการ</th>
+                      <th align='center' style="max-width:75px;">ประเภท</th>
+                      <th align="center" style="width:80px;" >แก้ไข/ซ่อน</th>
                     </tr>
                     <tr id="search">
                       <td>Location code</td>
+                      <td>พิกัด</td>
                       <td>ชื่อโครงการ</td>
-                      <td>จังหวัด</td>
                       <td>เขต/อำเภอ</td>
-                      <td>แขวง/ตำบล</td>
-                      <td>Location</td>
-                      <td>Remark</td>
-                      <td>Type</td>
-                      <td>Edit/Delete</td>
+                      <td>จังหวัด</td>                    
+                      <td>ผู้จัดสรรโครงการ</td>
+                      <td>ประเภท</td>
+                      <td>แก้ไข/ซ่อน</td>
 
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                            foreach ($query as $key =>
-                    $result) {
-                               
-                              $id = $result["id"];
-                              $location_code = $result["location_code"];
-                              $project_name = $result["project_name"];
-                              $province = $result["province"];
-                              $district =$result["district"];
-                              $address = $result["address"];
-                              $builder = $result["builder"];
-                              $sub_district =  $result["sub_district"];
-                              $location_lat_long = $result["location_lat_long"];
-                              $location_name = $result["location_name"];
-                              $node_nearby = $result["node_nearby"];
-                              $remark =  $result["remark"];
-                              $type = $result["type"];
-                              $status = $result["status"] ;
-                            
+                      foreach ($query as $key => $result) {
+                         
+                        $id = $result["id"];
+                        $location_code = $result["location_code"];
+                        $project_name = $result["project_name"];
+                        $province = $result["province"];
+                        $district =$result["district"];
+                        $address = $result["address"];
+                        $builder = $result["builder"];
+                        $sub_district =  $result["sub_district"];
+                        $location_lat_long = $result["location_lat_long"];
+                        $location_name = $result["location_name"];
+                        $node_nearby = $result["node_nearby"];
+                        $remark =  $result["remark"];
+                        $type = $result["type"];
+                        $status = $result["status"] ;
+                        $sale_id = $result["sale_personal_id"];
                       ?>
                     <tr>
 
                       <td>
                         <?php echo $location_code ?></td>
                       <td>
-                        <?php echo $project_name ?></td>
+                        <?php echo $location_lat_long ?></td>
                       <td>
-                        <?php echo $province ?></td>
+                        <?php echo $project_name ?></td>
                       <td>
                         <?php echo $district ?></td>
                       <td>
-                        <?php echo $sub_district ?></td>
+                        <?php echo $province ?></td>
                       <td>
-                        <?php echo $location_lat_long ?></td>
-                      <td>
-                        <?php echo $remark ?></td>
+                        <?php echo $builder ?></td>
                       <td>
                         <?php echo $type ?></td>
                       <td>
-                        <?php echo "<a class='btn btn-success btn-xs' href='detail.php?id=$id' >Edit</a>
+                        <?php echo "<a><button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#myModal$id' value='$id'>
+                          <i class='glyphicon glyphicon-eye-open'></i>
+                        </button></a>
                       " ?>
-                      <?php echo "<a class='btn btn-primary btn-xs' href='update-hide.php?status=$status&id=$id' >HIDE</a>
+                        <?php echo "<a class='btn btn-success btn-xs' href='detail.php?id=$id' ><i class='glyphicon glyphicon-pencil'></i></a>
+                      " ?>
+                      <?php echo "<a class='btn btn-warning btn-xs' href='update-hide.php?status=$status&id=$id' ><i class='glyphicon glyphicon-eye-close'></i></a>
                     " ?>
+                    
                   </td>
                 </tr>
+                <!-- Modal -->
+                <div class="modal fade " id="myModal<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">รายละเอียดของ<?php echo $location_code ; ?></h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="col-xs-3">
+                          <div class="form-group">
+                              <label>ID</label>
+                              <input type="text" class="form-control input-sm" name="id" id="id" readonly value="<?php echo $id; ?>"> 
+                          </div>
+                        </div>
+                        <div class="col-xs-5">
+                          <div class="form-group">
+                              <label>ชื่อโครงการ</label>
+                              <input type="text" class="form-control input-sm" name="project_name" readonly  id="project_name" value="<?php echo $project_name; ?>">
+                          </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <label>ประเภท</label>
+                              <input type="text" class="form-control input-sm" name="type" id="type"  readonly value="<?php echo $type; ?>">
+                            </div>
+                        </div>
 
+                        <div class="col-xs-4">  
+                          <div class="form-group">
+                              <label>แขวง/ตำบล</label>
+                              <input type="text" class="form-control input-sm" name="sub_district" id="sub_district"  readonly value="<?php echo $sub_district; ?>">   
+                          </div>
+                        </div>
+
+                        <div class="col-xs-4">  
+                          <div class="form-group">
+                              <label>เขต/อำเภอ</label>
+                              <input type="text" class="form-control input-sm" name="district" id="district"  readonly value="<?php echo $district; ?>">   
+                          </div>
+                        </div>
+
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                              <label>จังหวัด</label>
+                              <input type="text" class="form-control input-sm" name="province" id="province"  readonly value="<?php echo $province; ?>">
+                          </div>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="form-group">
+                                <label>ที่อยู่</label>
+                              <textarea class="form-control input-sm" name="address" readonly ><?php echo $address; ?></textarea>   
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>หมายเหตุ</label>
+                                <textarea class="form-control input-sm" name="remark" readonly ><?php echo $remark; ?></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-3">
+                          <div class="form-group">
+                                <label>Location code</label>
+                              <input type="text" class="form-control input-sm" name="location_code" id="location_code"  readonly value="<?php echo $location_code; ?>">   
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4">
+                          <div class="form-group">
+                                <label>Location name</label>
+                              <input type="text" class="form-control input-sm" name="location_name" id="location_name"  readonly value="<?php echo $location_name; ?>">   
+                            </div>
+                        </div>
+
+                        <div class="col-xs-5">
+                          <div class="form-group">
+                                <label>ชื่อผู้จัดสรรโครงการ</label>
+                              <input type="text" class="form-control input-sm" name="builder" id="builder"  readonly value="<?php echo $builder; ?>">   
+                            </div>
+                        </div>
+
+                        <div class="col-xs-5">
+                          <div class="form-group">
+                                <label>Node ใกล้เคียง</label>
+                              <input type="text" class="form-control input-sm" name="node_nearby" id="node_nearby"  readonly value="<?php echo $node_nearby; ?>">   
+                            </div>
+                        </div>
+
+                        <div class="col-xs-7">
+                          <div class="form-group">
+                                <label>ชื่อผู้รับผิดชอบโครงการ</label>
+                              <input type="text" class="form-control input-sm" name="sale_name" id="sale_name"  readonly value="">   
+                            </div>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">ปิด</button>
+                      </div>
+                    </div>
+                  </div>
+                </div><!--Modal-->
                 <?php } ?>
+
                 </tbody>
               <tfoot>
                 <tr >
-                  <th align='center' style="max-width:75px;">Location code</th>
+                  <th align='center' >Location code</th>
+                  <th align='center' >พิกัด</th>
                   <th align='center' >ชื่อโครงการ</th>
-                  <th align='center' style="max-width:90px;">จังหวัด</th>
-                  <th align='center' style="max-width:90px;">เขต/อำเภอ</th>
-                  <th align='center' style="max-width:90px;">แขวง/ตำบล</th>
-                  <th align='center' style="max-width:120px;">Location</th>
-                  <th align='center' style="max-width:140px;">Remark</th>
-                  <th align='center' style="max-width:75px;">Type</th>
-                  <th align="center" style="max-width:100px;" >Edit/Delete</th>
+                  <th align='center' >เขต/อำเภอ</th>
+                  <th align='center' >จังหวัด</th>
+                  <th align='center' >ผู้จัดสรรโครงการ</th>
+                  <th align='center' >ประเภท</th>
+                  <th align="center" >แก้ไข/ซ่อน</th>
                 </tr>
               </tfoot>
 
             </table>
 
             </div>
-
           </div><!--/panel body-->
         </div>
       </div>
     </div><!--/panel box-->
   </div><!--/row-->
 </div><!-- /container-->
-
 </body>
 </html>
