@@ -24,41 +24,41 @@
 		<title>Bootstrap 101 Template</title>
 
       <!--CSS Cutom กำหนดค่าเอง-->
-      <link rel="stylesheet" href="css_custom/custom.css">
+    <link rel="stylesheet" href="css_custom/custom.css">
 
-	     <!-- Datatable CSS -->
-	  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.css">  
-	  	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css">  
-	  	<link rel="stylesheet" charset="utf8" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">  
-	  	<link rel="stylesheet" charset="utf8" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css">  
-	  	<link rel="stylesheet" charset="utf8" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">  
+    <!-- Datatable CSS -->
+    <link rel="stylesheet" href="media/css/bootstrap.css">
+    <link rel="stylesheet" href="media/css/datatables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" charset="utf8" href="media/css/select/select.dataTables.min.css">
+    <link rel="stylesheet" charset="utf8" href="media/css/button/buttons.dataTables.min.css">
+    <link rel="stylesheet" charset="utf8" href="media/css/fixedHeader/fixedHeader.dataTables.min.css">
 
-	  <!-- Bootstrap Theme -->  
-	  	<link href="lumen/bootstrap.css" rel="stylesheet">  
-	  	<link href="2/css/font-awesome.min.css" rel="stylesheet">  
-	  	<link href="2/css/bootswatch.css" rel="stylesheet">  
+    <!-- Bootstrap Theme -->
+    <link href="lumen/bootstrap.css" rel="stylesheet">
+    <link href="2/css/font-awesome.min.css" rel="stylesheet">
+    <link href="2/css/bootswatch.css" rel="stylesheet">
 
-	  <!-- JQUERY -->  
-	  	<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.12.3.js"></script>
-	  <!--JQUERY Bootstrap theme -->  
-	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- JQUERY -->
+    <script type="text/javascript" charset="utf8" src="media/js/jquery-1.12.3.js"></script>
+    <!--JQUERY Bootstrap theme -->
+    <script src="media/js/bootstrap/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-	  <!-- DataTable -->  
-	  	<script type="text/javascript" charset="utf8"  src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-	  	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
-	  	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
-	  	<script type="text/javascript" src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
-	  	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedheader/3.1.2/js/dataTables.fixedHeader.min.js"></script>
-	  	<script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <!-- DataTable -->
+    <script type="text/javascript" charset="utf8"  src="media/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="media/js/datatables/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="media/js/button/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="media/js/select/dataTables.select.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="media/js/fixedHeader/dataTables.fixedHeader.min.js"></script>
+    <script type="text/javascript" src="media/js/fixedColumns/dataTables.fixedColumns.min.js"></script>
 
-	  <!--Button Datatable-->  
-	  	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.flash.min.js"></script>
-	  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-	  	<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-	  	<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-	  	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
-	  	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
-      <script type="text/javascript" src="media/js/jquery.checkAll.js"></script>
+    <!--Button Datatable-->
+    <script type="text/javascript" src="media/js/button/buttons.flash.min.js"></script>
+    <script type="text/javascript" src="media/js/button/jszip.min.js"></script>
+    <script type="text/javascript" src="media/js/button/pdfmake.min.js"></script>
+    <script type="text/javascript" src="media/js/button/vfs_fonts.js"></script>
+    <script type="text/javascript" src="media/js/button/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="media/js/button/buttons.print.min.js"></script>
+    <script type="text/javascript" src="media/js/jquery.checkAll.js"></script>
 		<script>
       
 			$(document).ready(function(){

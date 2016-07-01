@@ -63,7 +63,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              บัญชีผู้ใช้
+              <?php echo $row_sale_match_name; ?>
               
             </a>
             <ul class="dropdown-menu">

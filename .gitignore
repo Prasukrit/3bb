@@ -5,3 +5,4 @@ build
 _site
 *.lock
 .sass-cache/
+/nbproject/private/

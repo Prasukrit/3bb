@@ -1,13 +1,21 @@
 <?php 
 session_start();
-
+    
+$session = $_SESSION['ro10app'] = "woraton.t@jasmine.com";
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
 include('Classes/connection_pdo.php');
+include('./Classes/connection_mysqli_sales.php');
 
+$sql_sale_match = "SELECT * FROM rx_user WHERE user_email='" . $session . "'";
+$query_sale_match = mysqli_query($conn, $sql_sale_match);
+//echo $sql_sale_match;
+$row_sale_match = mysqli_fetch_assoc($query_sale_match);
+$row_sale_match_id = $row_sale_match["user_code"];
+$row_sale_match_name = $row_sale_match["user_name"];
+$row_sale_match_email = $row_sale_match["user_email"];
 
-$_SESSION['ro10app'] = "puwadon.sa@jasmine.com";
 
 $db = new DB();
 
@@ -22,47 +30,49 @@ $db = new DB();
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	<title>Bootstrap 101 Template</title>
 
-	<!--CSS Cutom กำหนดค่าเอง-->
-	<link rel="stylesheet" href="css_custom/custom.css"> 
+		<!--CSS Cutom กำหนดค่าเอง-->
+	  	<link rel="stylesheet" href="css_custom/custom.css">
+		<!-- Animate effect transition -->
+  		<link rel="stylesheet" type="text/css" href="css_custom/animate.css">
+	  	
+	  	<!-- Datatable CSS -->
+	  	<link rel="stylesheet" href="media/css/bootstrap.css">
+	  	<link rel="stylesheet" href="media/css/datatables/dataTables.bootstrap4.min.css">
+	  	<link rel="stylesheet" charset="utf8" href="media/css/select/select.dataTables.min.css">
+	  	<link rel="stylesheet" charset="utf8" href="media/css/button/buttons.dataTables.min.css">
+	  	<link rel="stylesheet" charset="utf8" href="media/css/fixedHeader/fixedHeader.dataTables.min.css">
 
-	<!-- Datatable CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/css/bootstrap.css">  
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap4.min.css">  
-	<link rel="stylesheet" charset="utf8" href="https://cdn.datatables.net/select/1.2.0/css/select.dataTables.min.css">  
-	<link rel="stylesheet" charset="utf8" href="https://cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css">  
-	<link rel="stylesheet" charset="utf8" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">  
+	  	<!-- Bootstrap Theme -->
+	  	<link href="lumen/bootstrap.css" rel="stylesheet">
+	  	<link href="2/css/font-awesome.min.css" rel="stylesheet">
+	  	<link href="2/css/bootswatch.css" rel="stylesheet">
 
-	<!-- Bootstrap Theme -->  
-	<link href="lumen/bootstrap.css" rel="stylesheet">  
-	<link href="2/css/font-awesome.min.css" rel="stylesheet">  
-	<link href="2/css/bootswatch.css" rel="stylesheet">  
+	  	<!-- JQUERY -->
+	  	<script type="text/javascript" charset="utf8" src="media/js/jquery-1.12.3.js"></script>
+	  	<!--JQUERY Bootstrap theme -->
+	  	<script src="media/js/bootstrap/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-	<!-- JQUERY -->  
-	<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.12.3.js"></script>
-	<!--JQUERY Bootstrap theme -->  
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	  	<!-- DataTable -->
+	  	<script type="text/javascript" charset="utf8"  src="media/js/jquery.dataTables.min.js"></script>
+	  	<script type="text/javascript" charset="utf8" src="media/js/datatables/dataTables.bootstrap4.min.js"></script>
+	 	<script type="text/javascript" src="media/js/button/dataTables.buttons.min.js"></script>
+	  	<script type="text/javascript" src="media/js/select/dataTables.select.min.js"></script>
+	  	<script type="text/javascript" charset="utf8" src="media/js/fixedHeader/dataTables.fixedHeader.min.js">	</script>
+	  	<script type="text/javascript" src="media/js/fixedColumns/dataTables.fixedColumns.min.js"></script>
 
-  	<!-- DataTable -->  
-  	<script type="text/javascript" charset="utf8"  src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-  	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
-  	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
-  	<script type="text/javascript" src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>
-  	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedheader/3.1.2/js/dataTables.fixedHeader.min.js"></script>
-  	<script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
-
-  	<!--Button Datatable-->  
-  	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.flash.min.js"></script>
-  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-  	<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-  	<script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-  	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script>
-  	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/buttons.print.min.js"></script>
-  	<script type="text/javascript" src="media/js/jquery.checkAll.js"></script>
+	  	<!--Button Datatable-->
+	  	<script type="text/javascript" src="media/js/button/buttons.flash.min.js"></script>
+	  	<script type="text/javascript" src="media/js/button/jszip.min.js"></script>
+	  	<script type="text/javascript" src="media/js/button/pdfmake.min.js"></script>
+	  	<script type="text/javascript" src="media/js/button/vfs_fonts.js"></script>
+	  	<script type="text/javascript" src="media/js/button/buttons.html5.min.js"></script>
+	  	<script type="text/javascript" src="media/js/button/buttons.print.min.js"></script>
+  		<script type="text/javascript" src="media/js/jquery.checkAll.js"></script>
 	<script>
     	$(document).ready(function(){
+    		//Disable Warning alert of Datatables
+    		$.fn.dataTable.ext.errMode = 'none';
 
-	        // Array holding selected row IDs
-	        //var rows_selected = [];
 			// English menu --> Thai menu เพิ่มส่วนนี้เข้าไปจะถือว่าเป็นการตั้งค่าให้ Datatable เป็น Default ใหม่เลย
 	        $.extend(true, $.fn.dataTable.defaults, {
 	            "language": {
@@ -109,10 +119,10 @@ $db = new DB();
 	    bottom: 0px;
 	    height: 45px;
 	    width: 100%;
-	    margin-bottom: -1px;
-	    background-color: #FFEBEE;
+	    margin-bottom: -3px;
+	    background-color: #212121;
 	    z-index: 1000;
-	    color:gray;
+	    color: #E0E0E0;
     	}
 	</style>
 </head>
@@ -129,7 +139,7 @@ $db = new DB();
   	<form action="update_manageproject.php" method="post" role="form" autocomplete="off"  accept-charset="utf-8">
   	<div class="container-fluid">
 	    <div class="row">
-	      	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	      	<div class="panel-group animated fadeIn" id="accordion" role="tablist" aria-multiselectable="true">
 	        	<div class="panel panel-warning margin-side" >
 	          		<div class="panel-heading" role="tab" id="headingOne">
 	            		<h4 class="panel-title"> <strong>รายการจัดสรรข้อมูลโครงการ</strong></h4>
@@ -137,7 +147,7 @@ $db = new DB();
 	          		<div class="panel-body" role="tab" id="panel-body">
 	            		<table id="example" class="display table table-striped table-bordered" width="100%" cellspacing="0">
 			              	<thead>
-				              	<tr>
+				              	<tr class="active">
 				              		<th></th>
 				              		<th align='center' style="max-width:90px;">Location code</th>
 				                  	<th align='center' style="max-width:120px;">Location</th>
@@ -149,25 +159,22 @@ $db = new DB();
 				                  	<th align='center' style="max-width:75px;">ประเภท</th>
 				              	</tr>
 			              	</thead>              
-			              	<tbody>
+			              	
 			              	
 			                <?php
-			                	if(isset($_POST["checkboxlist"])){
-			                		$get_id_post = $_POST["checkboxlist"];
-			                	}
-			                	
-			                	
-			                	//for($i=0;$i<count($_POST["checkboxlist"]);$i++){
-								foreach ($get_id_post as $get_id) {
-									$sql = "SELECT * FROM project WHERE id = :id ";
-				                  	$query = $db->query($sql);
-				                  	$query = $db->bind(':id', $get_id );
-				                  	$query = $db->execute();
-				                  	$query = $db->fetch();
-				                  	$count = $db->rowCount();
+		                	if(isset($_POST["checkboxlist"])){
+		                		$get_id_post = $_POST["checkboxlist"];
+		                	?>
+								<tbody>
+		                <?php	foreach ($get_id_post as $get_id) {
+								$sql = "SELECT * FROM project WHERE id = :id ";
+			                  	$query = $db->query($sql);
+			                  	$query = $db->bind(':id', $get_id );
+			                  	$query = $db->execute();
+			                  	$query = $db->fetch();
+			                  	$count = $db->rowCount();
 									
 									if(!empty(trim($get_id))){
-										//echo "checkboxlist $i = " .$get_id_post[$i]."<br>";
 										
 										foreach ($query as  $key => $result) {
 			                      
@@ -211,12 +218,20 @@ $db = new DB();
 					        		<?php }
 									}	
 								}
-			                    
-			                ?>
-							</tbody>
-							
+							?>
+								</tbody>
+
+			                <?php }else { ?>
+			                	<tbody>
+					                <tr>
+					                	<td colspan="8" style="text-align: center;" >
+					                		ยังไม่ทำการเลือกโครงการ กรุณากลับไปเลือกโครงการ <a href="manageproject.php">ย้อนกลับ</a>
+					                	</td>
+					                </tr>
+								</tbody>
+			                <?php } ?><!-- End else condition -->
+
 			              	<tfoot>
-			              		<?php  ?>
 			                	<tr>
 			                		<th></th>
 				                  	<th align='center' style="max-width:90px;">Location code</th>
@@ -236,7 +251,7 @@ $db = new DB();
 	      	</div>
 	    </div>
   	</div>
-  	<footer id="footer" class="navbar navbar-default">
+  	<footer id="footer" class="navbar ">
 	    <div class="container-fluid">
 	      	<div class="col-lg-8">
 		        <div class="form-group form-inline">

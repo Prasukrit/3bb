@@ -1,10 +1,18 @@
 <?php 
 	session_start();
+    
+        $session = $_SESSION['ro10app'] = "woraton.t@jasmine.com";
 
 	include('Classes/connection_pdo.php');
 	include_once("Classes/connection_mysqli_sales.php");
 
-	$_SESSION['ro10app'] = "puwadon.sa@jasmine.com";
+        $sql_sale_match = "SELECT * FROM rx_user WHERE user_email='" .$session. "'";
+        $query_sale_match = mysqli_query($conn, $sql_sale_match);
+        //echo $sql_sale_match;
+        $row_sale_match = mysqli_fetch_assoc($query_sale_match);
+        $row_sale_match_id = $row_sale_match["user_code"];
+        $row_sale_match_name = $row_sale_match["user_name"];
+        $row_sale_match_email = $row_sale_match["user_email"];
 
 	$db = new DB();
 
@@ -31,32 +39,46 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Bootstrap 101 Template</title>
 
-	<!--CSS Cutom กำหนดค่าเอง-->
-  	<link rel="stylesheet" href="css_custom/custom.css">
-	<!--CSS Datatables-->
-	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
-	<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.2.2/css/fixedColumns.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="https://datatables.net/release-datatables/extensions/ColVis/css/dataTables.colVis.css">
+		<!--CSS Cutom กำหนดค่าเอง-->
+	  	<link rel="stylesheet" href="css_custom/custom.css">
+	  	<!-- Animate effect transition -->
+  		<link rel="stylesheet" type="text/css" href="css_custom/animate.css">
 
-	<!-- Bootstrap Theme -->
-	<link href="lumen/bootstrap.css" rel="stylesheet">
-	<link href="2/css/font-awesome.min.css" rel="stylesheet">
-	<link href="2/css/bootswatch.css" rel="stylesheet">
+	  	<!-- Datatable CSS -->
+	  	<link rel="stylesheet" href="media/css/bootstrap.css">
+	  	<link rel="stylesheet" href="media/css/datatables/dataTables.bootstrap4.min.css">
+	  	<link rel="stylesheet" charset="utf8" href="media/css/select/select.dataTables.min.css">
+	  	<link rel="stylesheet" charset="utf8" href="media/css/button/buttons.dataTables.min.css">
+	  	<link rel="stylesheet" charset="utf8" href="media/css/fixedHeader/fixedHeader.dataTables.min.css">
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="//code.jquery.com/jquery-1.12.3.min.js"></script>
-	<!--JS datatable-->
-	<script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-	<!--Fixed header datatable-->
-	<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.2/js/dataTables.fixedHeader.min.js"></script>
-	<!--JS Fixed datatable -->
-	<script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
+	  	<!-- Bootstrap Theme -->
+	  	<link href="lumen/bootstrap.css" rel="stylesheet">
+	  	<link href="2/css/font-awesome.min.css" rel="stylesheet">
+	  	<link href="2/css/bootswatch.css" rel="stylesheet">
+
+	  	<!-- JQUERY -->
+	  	<script type="text/javascript" charset="utf8" src="media/js/jquery-1.12.3.js"></script>
+	  	<!--JQUERY Bootstrap theme -->
+	  	<script src="media/js/bootstrap/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	  	<!-- DataTable -->
+	  	<script type="text/javascript" charset="utf8"  src="media/js/jquery.dataTables.min.js"></script>
+	  	<script type="text/javascript" charset="utf8" src="media/js/datatables/dataTables.bootstrap4.min.js"></script>
+	 	<script type="text/javascript" src="media/js/button/dataTables.buttons.min.js"></script>
+	  	<script type="text/javascript" src="media/js/select/dataTables.select.min.js"></script>
+	  	<script type="text/javascript" charset="utf8" src="media/js/fixedHeader/dataTables.fixedHeader.min.js">	</script>
+	  	<script type="text/javascript" src="media/js/fixedColumns/dataTables.fixedColumns.min.js"></script>
+
+	  	<!--Button Datatable-->
+	  	<script type="text/javascript" src="media/js/button/buttons.flash.min.js"></script>
+	  	<script type="text/javascript" src="media/js/button/jszip.min.js"></script>
+	  	<script type="text/javascript" src="media/js/button/pdfmake.min.js"></script>
+	  	<script type="text/javascript" src="media/js/button/vfs_fonts.js"></script>
+	  	<script type="text/javascript" src="media/js/button/buttons.html5.min.js"></script>
+	  	<script type="text/javascript" src="media/js/button/buttons.print.min.js"></script>
+  		<script type="text/javascript" src="media/js/jquery.checkAll.js"></script>
 	<!--JS ColVision -->
 	<script type="text/javascript" language="javascript" src="https://datatables.net/release-datatables/extensions/ColVis/js/dataTables.colVis.js"></script>
-
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		//Button Function go back to previous page
@@ -88,13 +110,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="">ID.</label>
-											<input class="form-control" type="text" name="id"  placeholder="id.1234" value="<?php echo $row['id']; ?>" readonly />
+											<input class="form-control input-sm" type="text" name="id"  placeholder="id.1234" value="<?php echo $row['id']; ?>" readonly />
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="">ประเภท</label>
-											<select class="form-control" name="type" id="type"  ?>
+											<select class="form-control input-sm" name="type" id="type"  ?>
 												">
 												<option value="" <?php if($row['type']==''){
 													echo "selected='selected'";
@@ -122,13 +144,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="">ชื่อโครงการ</label>
-											<input class="form-control" type="text" name="project_name" placeholder="ระบุชื่อโครงการ" value="<?php echo $row['project_name']; ?>">
+											<input class="form-control input-sm" type="text" name="project_name" placeholder="ระบุชื่อโครงการ" value="<?php echo $row['project_name']; ?>">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="">ผู้ก่อตั้ง</label>
-											<input class="form-control" type="text" name="builder" placeholder="ระบุชื่อ" value="<?php echo $row['builder']; ?>"  >
+											<label for="">ผู้จัดสรรโครงการ</label>
+											<input class="form-control input-sm" type="text" name="builder" placeholder="ระบุชื่อ" value="<?php echo $row['builder']; ?>"  >
 										</div>
 									</div>
 								</div>
@@ -136,7 +158,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label for="">จังหวัด</label>
-											<input class="form-control" type="text" name="province" placeholder="ระบุจังหวัด" value="<?php echo $row['province']; ?>">
+											<input class="form-control input-sm" type="text" name="province" placeholder="ระบุจังหวัด" value="<?php echo $row['province']; ?>">
 										</div>
 									</div>
 								</div>
@@ -144,13 +166,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="">เขต/อำเภอ</label>
-											<input class="form-control" type="text" name="district" placeholder="ระบุเขตหรืออำเภอ" value="<?php echo $row['district']; ?>">
+											<input class="form-control input-sm" type="text" name="district" placeholder="ระบุเขตหรืออำเภอ" value="<?php echo $row['district']; ?>">
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="">แขวง/ตำบล</label>
-											<input class="form-control" type="text" name="sub_district" placeholder="ระบุแขวงหรือตำบล" value="<?php echo $row['sub_district']; ?>" />
+											<input class="form-control input-sm" type="text" name="sub_district" placeholder="ระบุแขวงหรือตำบล" value="<?php echo $row['sub_district']; ?>" />
 										</div>
 									</div>
 								</div>
@@ -189,13 +211,13 @@
 
 												<div class="form-group">
 													<label for="">location code</label>
-													<input class="form-control" type="text" name="location_code" placeholder="ระบุ location code" value="<?php echo $row['location_code']; ?>">
+													<input class="form-control input-sm" type="text" name="location_code" placeholder="ระบุ location code" value="<?php echo $row['location_code']; ?>">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">location name</label>
-													<input class="form-control" type="text" name="location_name" placeholder="ระบุ location name" value="<?php echo $row['location_name']; ?>">
+													<input class="form-control input-sm" type="text" name="location_name" placeholder="ระบุ location name" value="<?php echo $row['location_name']; ?>">
 												</div>
 											</div>
 										</div>
@@ -204,21 +226,21 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label for="">พิกัด</label>
-													<input class="form-control" type="text" name="location_lat_long" placeholder="ระบุ พิกัด"  value="<?php echo $row['location_lat_long']; ?>" />
+													<input class="form-control input-sm" type="text" name="location_lat_long" placeholder="ระบุ พิกัด"  value="<?php echo $row['location_lat_long']; ?>" />
 												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-6">
 												<div class="form-group">
-													<label for="">Remark</label>
-													<input class="form-control" type="text" name="remark" placeholder="ระบุ remark" value="<?php echo $row['remark']; ?>">
+													<label for="">หมายเหตุ</label>
+													<input class="form-control input-sm" type="text" name="remark" placeholder="ระบุ remark" value="<?php echo $row['remark']; ?>">
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">nodeใกล้เคียง</label>
-													<input class="form-control" type="text" name="node_nearby" placeholder="ระบุ nodeใกล้เคียง" value="<?php echo $row['node_nearby']; ?>">
+													<input class="form-control input-sm" type="text" name="node_nearby" placeholder="ระบุ nodeใกล้เคียง" value="<?php echo $row['node_nearby']; ?>">
 												</div>
 											</div>
 										</div>
@@ -235,13 +257,13 @@
 											<div class="col-lg-6">
 												<div class="form-group">
 													<label for="">รหัสพนักงาน</label>
-													<input class="form-control" type="text" name="sale_personal" placeholder="รหัสพนักงาน" readonly value="<?php echo $result['user_code']; ?>" >
+													<input class="form-control input-sm" type="text" name="sale_personal" placeholder="รหัสพนักงาน" readonly value="<?php echo $result['user_code']; ?>" >
 												</div>
 											</div>
 											<div class="col-lg-6">
 												<div class="form-group">
 													<label for="">ผู้รับผิดชอบโครงการ</label>
-													<input class="form-control" type="text" name="sale_personal" placeholder="ชื่อผู้รับผิดชอบโครงการ" readonly <?php if(empty($result["user_code"])){
+													<input class="form-control input-sm" type="text" name="sale_personal" placeholder="ชื่อผู้รับผิดชอบโครงการ" readonly <?php if(empty($result["user_code"])){
 															echo "value=''";
 														}else{
 															echo "value='".$result["user_name"]."'";
