@@ -1,65 +1,25 @@
 <?php
     session_start();
     
-    $session = $_SESSION['ro10app'] = "woraton.t@jasmine.com";
-    
     include('./Classes/connection_mysqli_sales.php');
-    
-    $sql_sale_match = "SELECT * FROM rx_user WHERE user_email='" .$session. "'";
-    $query_sale_match = mysqli_query($conn, $sql_sale_match);
-    //echo $sql_sale_match;
-    $row_sale_match = mysqli_fetch_assoc($query_sale_match);
-    $row_sale_match_id = $row_sale_match["user_code"];
-    $row_sale_match_name = $row_sale_match["user_name"];
-    $row_sale_match_email = $row_sale_match["user_email"];
+    //--Important--//
+    include ('./session_validate.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Bootstrap 101 Template</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
 
-  <!--CSS Cutom กำหนดค่าเอง-->
-  <link rel="stylesheet" href="css_custom/custom.css">
-  <!-- Animate effect transition -->
-  <link rel="stylesheet" type="text/css" href="css_custom/animate.css">
-  
-  <!-- Datatable CSS -->
-  <link rel="stylesheet" href="media/css/bootstrap.css">
-  <link rel="stylesheet" href="media/css/datatables/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" charset="utf8" href="media/css/select/select.dataTables.min.css">
-  <link rel="stylesheet" charset="utf8" href="media/css/button/buttons.dataTables.min.css">
-  <link rel="stylesheet" charset="utf8" href="media/css/fixedHeader/fixedHeader.dataTables.min.css">
+    <!--CSS PACKS-->
+    <?php include('./css_packs.html') ?>
 
-  <!-- Bootstrap Theme -->
-  <link href="lumen/bootstrap.css" rel="stylesheet">
-  <link href="2/css/font-awesome.min.css" rel="stylesheet">
-  <link href="2/css/bootswatch.css" rel="stylesheet">
-
-  <!-- JQUERY -->
-  <script type="text/javascript" charset="utf8" src="media/js/jquery-1.12.3.js"></script>
-  <!--JQUERY Bootstrap theme -->
-  <script src="media/js/bootstrap/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-  <!-- DataTable -->
-  <script type="text/javascript" charset="utf8"  src="media/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="media/js/datatables/dataTables.bootstrap4.min.js"></script>
-  <script type="text/javascript" src="media/js/button/dataTables.buttons.min.js"></script>
-  <script type="text/javascript" src="media/js/select/dataTables.select.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="media/js/fixedHeader/dataTables.fixedHeader.min.js"></script>
-  <script type="text/javascript" src="media/js/fixedColumns/dataTables.fixedColumns.min.js"></script>
-
-  <!--Button Datatable-->
-  <script type="text/javascript" src="media/js/button/buttons.flash.min.js"></script>
-  <script type="text/javascript" src="media/js/button/jszip.min.js"></script>
-  <script type="text/javascript" src="media/js/button/pdfmake.min.js"></script>
-  <script type="text/javascript" src="media/js/button/vfs_fonts.js"></script>
-  <script type="text/javascript" src="media/js/button/buttons.html5.min.js"></script>
-  <script type="text/javascript" src="media/js/button/buttons.print.min.js"></script>
+    <!--SCRIPT PACKS-->
+    <?php include('./script_packs.html') ?>
   <style>
     .box{
       margin: 15px;
@@ -75,7 +35,7 @@
 	<div class="container">
     <div class="panel panel-warning animated fadeIn">
       <div class="panel-heading">
-        <h2 style="color:white;">Import Excel File</h2>
+        <h3 style="color:white;">Import Excel File</h3>
       </div>
       <form class="form-group" name="form1" method="post" action="uploadfileexcel.php" enctype="multipart/form-data">
       <div class="panel-body">

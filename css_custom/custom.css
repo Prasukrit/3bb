@@ -11,6 +11,10 @@
     .margin-side{
       margin: 0px 15px;
     }
+    .button-md-size{
+        width: 120px;
+        margin-right: 10px;
+    }
     thead{
       background-color:white;
   	}

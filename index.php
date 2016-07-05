@@ -1,17 +1,11 @@
 <?php
     session_start();
     
-    $session = $_SESSION['ro10app'] = "woraton.t@jasmine.com";
+    $_SESSION['ro10app'] = "leena.k@jasmine.com";
     include('Classes/connection_pdo.php');
     include('Classes/connection_mysqli_sales.php');
-    
-    $sql_sale_match = "SELECT * FROM rx_user WHERE user_email='" .$session. "'";
-    $query_sale_match = mysqli_query($conn, $sql_sale_match);
-    //echo $sql_sale_match;
-    $row_sale_match = mysqli_fetch_assoc($query_sale_match);
-    $row_sale_match_id = $row_sale_match["user_code"];
-    $row_sale_match_name = $row_sale_match["user_name"];
-    $row_sale_match_email = $row_sale_match["user_email"];
+    //--Important--//
+    include ('./session_validate.php');
     
     $db = new DB();
 ?>
@@ -24,45 +18,11 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title>โครงการติดตั้งNode3</title>
 
-  <!--CSS Cutom กำหนดค่าเอง-->
-  <link rel="stylesheet" href="css_custom/custom.css">
-  
-  
-  <!-- Datatable CSS -->
-  <link rel="stylesheet" href="media/css/bootstrap.css">
-  <link rel="stylesheet" href="media/css/datatables/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" charset="utf8" href="media/css/select/select.dataTables.min.css">
-  <link rel="stylesheet" charset="utf8" href="media/css/button/buttons.dataTables.min.css">
-  <link rel="stylesheet" charset="utf8" href="media/css/fixedHeader/fixedHeader.dataTables.min.css">
+  <!--CSS PACKS-->
+  <?php include('./css_packs.html') ?>
 
-  <!-- Bootstrap Theme -->
-  <link href="lumen/bootstrap.css" rel="stylesheet">
-  <link href="2/css/font-awesome.min.css" rel="stylesheet">
-  <link href="2/css/bootswatch.css" rel="stylesheet">
-  
-  <!-- Animate effect transition -->
-  <link rel="stylesheet" type="text/css" href="css_custom/animate.css">
-
-  <!-- JQUERY -->
-  <script type="text/javascript" charset="utf8" src="media/js/jquery-1.12.3.js"></script>
-  <!--JQUERY Bootstrap theme -->
-  <script src="media/js/bootstrap/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-  <!-- DataTable -->
-  <script type="text/javascript" charset="utf8"  src="media/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="media/js/datatables/dataTables.bootstrap4.min.js"></script>
-  <script type="text/javascript" src="media/js/button/dataTables.buttons.min.js"></script>
-  <script type="text/javascript" src="media/js/select/dataTables.select.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="media/js/fixedHeader/dataTables.fixedHeader.min.js"></script>
-  <script type="text/javascript" src="media/js/fixedColumns/dataTables.fixedColumns.min.js"></script>
-
-  <!--Button Datatable-->
-  <script type="text/javascript" src="media/js/button/buttons.flash.min.js"></script>
-  <script type="text/javascript" src="media/js/button/jszip.min.js"></script>
-  <script type="text/javascript" src="media/js/button/pdfmake.min.js"></script>
-  <script type="text/javascript" src="media/js/button/vfs_fonts.js"></script>
-  <script type="text/javascript" src="media/js/button/buttons.html5.min.js"></script>
-  <script type="text/javascript" src="media/js/button/buttons.print.min.js"></script>
+  <!--SCRIPT PACKS-->
+  <?php include('./script_packs.html') ?>
 
   <script type="text/javascript">
 
@@ -110,7 +70,7 @@
             "fixedHeader": true,
             "stateSave": true,
             "iDisplayLength": 10,
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
             "orderCellsTop": true,
             'columnDefs': [{
               'targets': 7,
@@ -190,7 +150,7 @@
                   <?php
                           // $sql = "SELECT * FROM project where status = 0";
                           // $query = mysqli_query($conn, $sql);
-                      $sql = "SELECT * FROM project WHERE sale_personal_id = '".$row_sale_match_id."' ";
+                      $sql = "SELECT * FROM project WHERE sale_personal_id = '".$row_sale_match_id."' and status = '0' ";
                       $query = $db->query($sql);
                       $query = $db->execute();
                       $query = $db->fetch();
@@ -200,11 +160,11 @@
                       <th align='center' style="max-width:90px;">Location code</th>
                       <th align='center' style="max-width:110px;">พิกัด</th>
                       <th align='center' >ชื่อโครงการ</th>
-                      <th align='center' style="max-width:70px;">เขต/อำเภอ</th>
+                      <th align='center' style="max-width:75px;">เขต/อำเภอ</th>
                       <th align='center' style="max-width:70px;">จังหวัด</th>       
                       <th align='center' style="max-width:110px;">ผู้จัดสรรโครงการ</th>
                       <th align='center' style="max-width:75px;">ประเภท</th>
-                      <th align="center" style="width:80px;min-width: 80px" >แก้ไข/ซ่อน</th>
+                      <th align="center" style="width:80px;min-width: 100px" >ดู/แก้ไข/ซ่อน</th>
                     </tr>
                     <tr id="search">
                       <td>Location code</td>
@@ -362,7 +322,7 @@
 
                             // Query ของ portal 
                             $sql_sale = "SELECT * FROM rx_user where user_code ='".trim($user_code)."' limit 1 ";
-                            $row_sale = mysqli_query($conn, $sql_sale);
+                            $row_sale = mysqli_query($conn_sale, $sql_sale);
                             while($result = mysqli_fetch_assoc($row_sale)) {
 
                          ?>
@@ -398,7 +358,7 @@
                   <th align='center' >จังหวัด</th>
                   <th align='center' >ผู้จัดสรรโครงการ</th>
                   <th align='center' >ประเภท</th>
-                  <th align="center" >แก้ไข/ซ่อน</th>
+                  <th align="center" >ดู/แก้ไข/ซ่อน</th>
                 </tr>
               </tfoot>
 

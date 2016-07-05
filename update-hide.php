@@ -1,6 +1,6 @@
  <?php
 	
-	$conn=mysqli_connect("","root","","testdb");
+	$conn=mysqli_connect("localhost","root","","testdb");
 
 	$project_id = $_GET['id'];
 	$status = $_GET['status'];  
