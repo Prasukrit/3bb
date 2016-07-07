@@ -31,7 +31,7 @@ include('Classes/connection_pdo.php');
 ?>
 <html>
     <head>
-        <title>title</title>
+        <title>กำลังกำหนดสิทธิ์..</title>
         <meta http-equiv="refresh" content="2; url=assign_menu.php" />
         <?php
         //CSS

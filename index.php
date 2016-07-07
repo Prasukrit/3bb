@@ -1,7 +1,7 @@
 <?php
     session_start();
     
-    $_SESSION['ro10app'] = "leena.k@jasmine.com";
+    $_SESSION['ro10app'] = "test@jasmine.com";
     include('Classes/connection_pdo.php');
     include('Classes/connection_mysqli_sales.php');
     //--Important--//
@@ -74,14 +74,38 @@
             "orderCellsTop": true,
             'columnDefs': [{
               'targets': 7,
-              'searchable': false,
               'orderable': false
             }],
-            "scrollX": true,
+            //"scrollX": true,
             "buttons": [
-                 { className:'glyphicon glyphicon glyphicon-open-file' ,extend:'excelFlash',text: '&nbsp;EXCEL'},
-                 { className:'glyphicon glyphicon glyphicon-open-file' ,extend:'csvFlash',text: '&nbsp;CSV'},
-                 { className:'glyphicon glyphicon-print' ,extend:'print',text: '&nbsp;Print',orientation: 'landscape',filename: 'โครงการ node 3',pageSize: 'LEGAL'}
+                { 
+                    className:'glyphicon glyphicon glyphicon-open-file' ,
+                    extend:'excelFlash',
+                    text: '&nbsp;EXCEL',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5,6 ] 
+                    }
+                },
+                { 
+                    className:'glyphicon glyphicon glyphicon-open-file' ,
+                    extend:'csvFlash',
+                    text: '&nbsp;CSV',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5,6 ] 
+                    }
+                },
+                { 
+                    className:'glyphicon glyphicon-print' ,
+                    extend:'print',
+                    text: '&nbsp;Print',
+                    orientation: 'landscape' ,
+                    filename: 'โครงการ node 3',
+                    pageSize: 'LEGAL',
+                    exportOptions: {
+                        columns: [ 0,1,2,3,4,5,6 ],
+                        
+                    }
+                }
             ],
 
             "order": [[ 0, "desc" ]]
