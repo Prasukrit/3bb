@@ -4,7 +4,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-include('Classes/connection_pdo.php');
+include('./Classes/connection_pdo.php');
 include('./Classes/connection_mysqli_sales.php');
 
 //--Important--//
@@ -136,7 +136,7 @@ $db = new DB();
                                             $query = $db->fetch();
                                             $count = $db->rowCount();
 
-                                            if (!empty(trim($get_id))) {
+                                            if ((trim($get_id) != "")) {
 
                                                 foreach ($query as $key => $result) {
 
