@@ -66,7 +66,7 @@
 
         // Data Table function
         var table = $('#example').DataTable( {
-            "dom": "<'row'<'col-md-6'lB><'col-md-6'f>>rt<'row'<'col-md-6'i><'col-md-6'p>>",
+            "dom": "<'pull-right'l><'col-md-6'B><'col-md-6 pull-right'f>rt<'row'<'col-md-6'i><'col-md-6'p>>",
             "fixedHeader": true,
             "stateSave": true,
             "iDisplayLength": 10,
@@ -78,8 +78,9 @@
             }],
             //"scrollX": true,
             "buttons": [
+
                 { 
-                    className:'glyphicon glyphicon glyphicon-open-file' ,
+                    className:'glyphicon glyphicon glyphicon-open-file ' ,
                     extend:'excelFlash',
                     text: '&nbsp;EXCEL',
                     exportOptions: {
@@ -164,14 +165,16 @@
         </div><!--/panel header-->
         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
-            <div class="col-lg-6 pull-left">
-              <!--<a href="" class="editor_create btn btn-primary btn-md">Create +</a>
-            -->
-            </div>
+            
           <!--TABLE-->
           <div class="row padding-small">
                 <table id="example" class="display table table-striped table-bordered" width="100%" cellspacing="0">
-                  <?php
+                    <div class="col-md-6 pull-left">
+                        <?php if(strpos(trim($sale_perrmission_menu),"menu_id5") != ""  ) { ?>
+                        <a href="create_project.php?menu_id=5" class="<?php if ($page == 'create_project.php' || $page =='create_project_update.php' ) { ?>active<?php } ?> create_project dt-button buttons-excel buttons-flash glyphicon glyphicon-plus" >&nbsp;CREATE</a>
+                        <?php } ?>
+                  </div>
+                    <?php
                           // $sql = "SELECT * FROM project where status = 0";
                           // $query = mysqli_query($conn, $sql);
                       $sql = "SELECT * FROM project WHERE sale_personal_id = '".$row_sale_match_id."' and status = '0' ";

@@ -12,24 +12,13 @@
 	   	$get_id = $_GET["id"];
    	}
 ?>
-
-<?php 
-		
-		$sql = "SELECT * FROM project where id =".$get_id ;
-		$query = $db->query($sql);
-		$query = $db->bind(':id',$get_id);
-		$query = $db->execute();
-		$query = $db->fetch();
-		
-	?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>แก้ไขข้อมูลโครงการ</title>
+	<title>สร้างโครงการ</title>
 
         <!--CSS PACKS-->
         <?php include('./css_packs.html') ?>
@@ -49,11 +38,7 @@
 </head>
 <body class="bg-default">
 	<?php include('header.php') ?>
-	<form action="update-success.php" method="post">
-		<?php
-				foreach ($query as $key => $row) {
-	
-		?>
+	<form action="create_project_update.php" method="post">
 		
 		<div class="container">
 			<div class="panel panel-primary animated fadeIn">
@@ -68,8 +53,8 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="">ID.</label>
-											<input class="form-control input-sm" type="text" name="id"  placeholder="id.1234" value="<?php echo $row['id']; ?>" readonly />
+											<label for="">ชื่อโครงการ</label>
+											<input class="form-control input-sm" type="text" name="project_name" placeholder="ระบุชื่อโครงการ" >
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -77,39 +62,23 @@
 											<label for="">ประเภท</label>
 											<select class="form-control input-sm" name="type" id="type"  ?>
 												">
-												<option value="" <?php if($row['type']==''){
-													echo "selected='selected'";
-												} ?>>--กรุณาเลือก--</option>
-												<option value="คอนโด" <?php if($row['type']=='คอนโด'){
-													echo "selected='selected'";
-												} ?>>คอนโด</option>
-												<option value="หมู่บ้านจัดสรรค์" <?php if($row['type']=='หมู่บ้านจัดสรรค์'){
-													echo "selected='selected'";
-												} ?>>หมู่บ้านจัดสรรค์</option>
-												<option value="อพาทเม้น" <?php if($row['type']=='อพาทเม้น'){
-													echo "selected='selected'";
-												} ?>>อพาทเม้น</option>
-												<option value="หอพักเอกชน" <?php if($row['type']=='หอพักเอกชน'){
-													echo "selected='selected'";
-												} ?>>หอพักเอกชน</option>
-												<option value="บ้านเดี่ยว" <?php if($row['type']=='บ้านเดี่ยว'){
-													echo "selected='selected'";
-												} ?>>บ้านเดี่ยว</option>
+												<option value="" >--กรุณาเลือก--</option>
+												<option value="คอนโด" >คอนโด</option>
+												<option value="หมู่บ้านจัดสรรค์" >หมู่บ้านจัดสรรค์</option>
+												<option value="อพาทเม้น" >อพาทเม้น</option>
+												<option value="หอพักเอกชน" >หอพักเอกชน</option>
+												<option value="บ้านเดี่ยว" >บ้านเดี่ยว</option>
 											</select>
 										</div>
 									</div>
 								</div>
+                                                                
 								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="">ชื่อโครงการ</label>
-											<input class="form-control input-sm" type="text" name="project_name" placeholder="ระบุชื่อโครงการ" value="<?php echo $row['project_name']; ?>">
-										</div>
-									</div>
-									<div class="col-md-6">
+									
+									<div class="col-md-12">
 										<div class="form-group">
 											<label for="">ผู้จัดสรรโครงการ</label>
-											<input class="form-control input-sm" type="text" name="builder" placeholder="ระบุชื่อ" value="<?php echo $row['builder']; ?>"  >
+											<input class="form-control input-sm" type="text" name="builder" placeholder="ระบุชื่อ"  >
 										</div>
 									</div>
 								</div>
@@ -117,7 +86,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label for="">จังหวัด</label>
-											<input class="form-control input-sm" type="text" name="province" placeholder="ระบุจังหวัด" value="<?php echo $row['province']; ?>">
+											<input class="form-control input-sm" type="text" name="province" placeholder="ระบุจังหวัด" >
 										</div>
 									</div>
 								</div>
@@ -125,13 +94,13 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="">เขต/อำเภอ</label>
-											<input class="form-control input-sm" type="text" name="district" placeholder="ระบุเขตหรืออำเภอ" value="<?php echo $row['district']; ?>">
+											<input class="form-control input-sm" type="text" name="district" placeholder="ระบุเขตหรืออำเภอ" >
 										</div>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="">แขวง/ตำบล</label>
-											<input class="form-control input-sm" type="text" name="sub_district" placeholder="ระบุแขวงหรือตำบล" value="<?php echo $row['sub_district']; ?>" />
+											<input class="form-control input-sm" type="text" name="sub_district" placeholder="ระบุแขวงหรือตำบล"  />
 										</div>
 									</div>
 								</div>
@@ -140,7 +109,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label for="">ที่อยู่</label>
-											<textarea style="text-indent:5px;" class="form-control" name="address" id="" cols="30" rows="3" placeholder="ระบุที่อยู่"><?php echo trim($row['address']); ?></textarea>
+											<textarea style="text-indent:5px;" class="form-control" name="address" id="" cols="30" rows="3" placeholder="ระบุที่อยู่"></textarea>
 										</div>
 									</div>
 								</div>
@@ -170,13 +139,13 @@
 
 												<div class="form-group">
 													<label for="">location code</label>
-													<input class="form-control input-sm" type="text" name="location_code" placeholder="ระบุ location code" value="<?php echo $row['location_code']; ?>">
+													<input class="form-control input-sm" type="text" name="location_code" placeholder="ระบุ location code" >
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">location name</label>
-													<input class="form-control input-sm" type="text" name="location_name" placeholder="ระบุ location name" value="<?php echo $row['location_name']; ?>">
+													<input class="form-control input-sm" type="text" name="location_name" placeholder="ระบุ location name" >
 												</div>
 											</div>
 										</div>
@@ -185,7 +154,7 @@
 											<div class="col-md-12">
 												<div class="form-group">
 													<label for="">พิกัด</label>
-													<input class="form-control input-sm" type="text" name="location_lat_long" placeholder="ระบุ พิกัด"  value="<?php echo $row['location_lat_long']; ?>" />
+													<input class="form-control input-sm" type="text" name="location_lat_long" placeholder="ระบุ พิกัด"  />
 												</div>
 											</div>
 										</div>
@@ -193,25 +162,22 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">หมายเหตุ</label>
-													<input class="form-control input-sm" type="text" name="remark" placeholder="ระบุ remark" value="<?php echo $row['remark']; ?>">
+													<input class="form-control input-sm" type="text" name="remark" placeholder="ระบุ remark" >
 												</div>
 											</div>
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="">nodeใกล้เคียง</label>
-													<input class="form-control input-sm" type="text" name="node_nearby" placeholder="ระบุ nodeใกล้เคียง" value="<?php echo $row['node_nearby']; ?>">
+													<input class="form-control input-sm" type="text" name="node_nearby" placeholder="ระบุ nodeใกล้เคียง" >
 												</div>
 											</div>
 										</div>
-									<?php  
-									
-									$user_code = $row['sale_personal_id']; // testdb ของอีกอันนึง
-
-									// Query ของ portal 
-									$sql_sale = "SELECT * FROM rx_user where user_code ='".trim($user_code)."' limit 1 ";
-									$row_sale = mysqli_query($conn_sale, $sql_sale);
-									while($result = mysqli_fetch_assoc($row_sale)) { ?>
-
+                                                                                <?php
+                                                                                // Query ของ portal 
+                                                                                $sql_sale = "SELECT * FROM rx_user where user_code ='" . trim($row_sale_match_id) . "' limit 1 ";
+                                                                                $row_sale = mysqli_query($conn_sale, $sql_sale);
+                                                                                while ($result = mysqli_fetch_assoc($row_sale)) {
+                                                                                    ?>
 										<div class="row">
 											<div class="col-lg-6">
 												<div class="form-group">
@@ -231,14 +197,15 @@
 												</div>
 											</div>
 										</div>
-										<?php } ?>
+                                                                                <?php } ?>
+										
 									</div>
 									<!--/ให้บริการ -->
 									<!--ไม่ได้ให้บริการ -->
 									<div class="tab-pane fade" id="close">
 										<p><strong>ระบุมายเหตุ</strong></p><hr>
 										
-										<textarea style="text-indent:5px;" class="form-control danger" name="remark" id="" cols="30" rows="3" placeholder="ระบุหมายเหตุกำกับ"><?php echo trim($row['remark2']); ?></textarea>
+										<textarea style="text-indent:5px;" class="form-control danger" name="remark" id="" cols="30" rows="3" placeholder="ระบุหมายเหตุกำกับ"></textarea>
 									</div>
 									<!--/ไม่ได้ให้บริการ -->
 								</div>
@@ -251,14 +218,14 @@
 											<div class="col-lg-4">
 												<div class="radio">
 													<label>
-														<input type="radio" name="status" id="status" value="0" <?php if($row["status"]==0){ echo "checked=''"; } ?>>แสดง
+                                                                                                            <input type="radio" name="status" id="status" value="0" checked="" >แสดง
 													</label>
 												</div>
 											</div>	
 											<div class="col-lg-4">
 												<div class="radio">
 													<label>
-														<input type="radio" name="status" id="status" value="1" <?php if($row["status"]==1){ echo "checked=''"; } ?>>ซ่อน
+														<input type="radio" name="status" id="status" value="1" >ซ่อน
 													</label>
 												</div>
 											</div>
@@ -280,7 +247,7 @@
 			<!--/panel box-->
 		</div>
 		<!-- /container -->
-		<?php } //End foreach ?>
+		
 	</form>
 </body>
 </html>

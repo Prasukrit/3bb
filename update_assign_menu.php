@@ -199,13 +199,14 @@
                                 <table class="table table-active table-bordered">
                                     <thead>
                                         <tr>
-                                            <th colspan="4">กำหนดสิทธิ์ให้กับ : <?php echo $sale_name; ?></th>
+                                            <th colspan="5">กำหนดสิทธิ์ให้กับ : <?php echo $sale_name; ?></th>
                                         </tr>
                                         <tr>
                                             <th>โครงการ</th>
                                             <th>Import</th>
                                             <th>จัดสรรโครงการ</th>
                                             <th>กำหนดสิทธิ์</th>
+                                            <th>สร้างโครงการ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -232,6 +233,12 @@
                                             <td><input class="" checked type="checkbox" name="menu_permission[]" value="menu_id4,"  ></td>
                                             <?php } else { ?>
                                             <td><input class=""  type="checkbox" name="menu_permission[]" value="menu_id4,"  ></td>
+                                            <?php } ?>
+                                            
+                                            <?php if(strpos($sale_menu,"menu_id5") != ""  ) { ?>
+                                            <td><input class="" checked type="checkbox" name="menu_permission[]" value="menu_id5,"  ></td>
+                                            <?php } else { ?>
+                                            <td><input class=""  type="checkbox" name="menu_permission[]" value="menu_id5,"  ></td>
                                             <?php } ?>
                                         </tr>
                                     </tbody>
