@@ -26,7 +26,7 @@ include('Classes/connection_pdo.php');
         
 	$query = $db->query($sql);
 	$query = $db->execute();
-        
+        echo $sql;
         
 ?>
 <html>

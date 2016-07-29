@@ -1,8 +1,6 @@
 <?php
 	include('Classes/connection_pdo.php');
 
-	header("Location: index.php");
-
 	$db = new DB();
 
 	$sql = "UPDATE project SET 
@@ -19,11 +17,15 @@
 			remark = '".$_POST["remark"]."' ,
 			node_nearby = '".$_POST["node_nearby"]."' ,
 			type = '".$_POST["type"]."' ,
-			status = '".$_POST["status"]."'
+			project_unit = '".$_POST["project_unit"]."',
+                        contact_name = '".$_POST["contact_name"]."',
+                        contact_tel1 = '".$_POST["contact_tel1"]."',
+                        contact_tel2 = '".$_POST["contact_tel2"]."',
+                        status = '".$_POST["status"]."' 
 			WHERE id = '".$_POST["id"]."' ";
 
 	$query = $db->query($sql);
 	$query = $db->execute();
-	$query = $db->single();
-
+        
+        header("Location: index.php");
 ?>

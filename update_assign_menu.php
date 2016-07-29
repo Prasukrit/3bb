@@ -156,7 +156,7 @@
                     $sale_name = $row_sale["user_name"];
                     $sale_email = $row_sale["user_email"];
                     $sale_tel = $row_sale["user_tel"];
-                    $sale_menu = $row_sale["permission_menu_id"]
+                    $sale_menu = $row_sale["permission_menu_id"];
                     ?>
                     <div class="panel-body">
                         <div class="row">
@@ -199,7 +199,7 @@
                                 <table class="table table-active table-bordered">
                                     <thead>
                                         <tr>
-                                            <th colspan="5">กำหนดสิทธิ์ให้กับ : <?php echo $sale_name; ?></th>
+                                            <th colspan="6">กำหนดสิทธิ์ให้กับ : <?php echo $sale_name; ?></th>
                                         </tr>
                                         <tr>
                                             <th>โครงการ</th>
@@ -207,6 +207,7 @@
                                             <th>จัดสรรโครงการ</th>
                                             <th>กำหนดสิทธิ์</th>
                                             <th>สร้างโครงการ</th>
+                                            <th>ผู้รับผิดชอบ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -239,6 +240,12 @@
                                             <td><input class="" checked type="checkbox" name="menu_permission[]" value="menu_id5,"  ></td>
                                             <?php } else { ?>
                                             <td><input class=""  type="checkbox" name="menu_permission[]" value="menu_id5,"  ></td>
+                                            <?php } ?>
+                                            
+                                            <?php if(strpos($sale_menu,"menu_id6") != ""  ) { ?>
+                                            <td><input class="" checked type="checkbox" name="menu_permission[]" value="menu_id6,"  ></td>
+                                            <?php } else { ?>
+                                            <td><input class=""  type="checkbox" name="menu_permission[]" value="menu_id6,"  ></td>
                                             <?php } ?>
                                         </tr>
                                     </tbody>

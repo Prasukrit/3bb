@@ -49,4 +49,10 @@
     table.dataTable thead th:first-child {
       	cursor: pointer;
     }
+    .box-border-small{
+/*        border: solid #ccc 1px ;*/
+        margin: 3px;
+        min-height: 30px;
+/*        background-color: #eeeeee;*/
+    }
     

@@ -68,6 +68,14 @@
                 </li>
                 <?php } ?>
                 
+                <?php if(strpos($sale_perrmission_menu,"menu_id6") != "" ) { ?>
+                <li <?php if ($page == 'sale_project.php' ) { ?>class="active"<?php } ?>>
+                    <a href="sale_project.php?menu_id=6">
+                        <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;ผู้รับผิดชอบ
+                    </a>
+                </li>
+                <?php } ?>
+                
                 <?php if(strpos($sale_perrmission_menu,"menu_id4") != "" ) { ?>
                 <li <?php if ($page == 'assign_menu.php' || $page == 'update_assign_menu.php') { ?>class="active"<?php } ?>>
                     <a href="assign_menu.php?menu_id=4">

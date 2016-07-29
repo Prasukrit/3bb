@@ -45,7 +45,7 @@
               <input type="file" name="fileToUpload" id="fileToUpload" class="filestyle" data-size="nr" data-buttonText="Import Excel" data-iconName="glyphicon glyphicon-folder-open" data-placeholder="ไม่มีไฟล์" data-buttonName="btn-info" data-icon="false" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
               <hr>
               
-              <p class="label label-primary lead" style="background-color:#AD1457;">ตัวอย่าง format</p>
+              <p class="label label-primary lead" style="background-color:#AD1457;">ตัวอย่าง format column </p>
               <div class="well ">
                 <div class="row">
                   <div class="col-sm-4">

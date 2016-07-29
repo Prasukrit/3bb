@@ -86,93 +86,132 @@
   		function goBack() {
     		window.history.back();
   		}
+                
+                
 	</script>
 	<style>
-		#footer {
-	    position: fixed;
-	    left: 0px;
-	    bottom: 0px;
-	    height: 45px;
-	    width: 100%;
-	    margin-bottom: -1px;
-	    background-color: #FFEBEE;
-	    z-index: 1000;
-	    color:gray;
-    	}
+            #footer {
+                position: fixed;
+                left: 0px;
+                bottom: 0px;
+                height: 45px;
+                width: 100%;
+                margin-bottom: -1px;
+                background-color: #FFEBEE;
+                z-index: 1000;
+                color:gray;
+            }
+            #table-scroll {
+                max-height: 450px;
+                overflow:auto;  
+                margin-bottom: 20px;
+            }
+            #table-wrapper{
+                position: relative;
+            }
+            #header-fixed {
+                position: fixed;
+                top: 0px; 
+                display:none;
+                background-color:white;
+            }
 	</style>
 </head>
 <body>
 	<?php include('header.php') ?>
-	<div class="container">
-	<div class="box animated fadeInDown">
-            <h1 align="center"><i class="glyphicon glyphicon-ok-sign" style="color:green"></i>    อัพเดทผู้รับผิดชอบโครงการเสร็จสมบูรณ์ !!</h1>
-        </div>
-        <hr>
-        <div class="col-lg-3">
-            <div class="well well-lg" style="background-color:#d9edf7;">
-                <p><strong><u>ผู้รับผิดชอบโครงการ</u></strong></p>
-                <p><?php echo "รหัสพนักงาน : " . $sale_id . "" ?></p>
-                <p><?php echo "ชื่อ : " . $sale_name . "" ?></p>
+	<div class="container-fluid">
+            <div class="box animated fadeInDown">
+                <h1 align="center"><i class="glyphicon glyphicon-ok-sign" style="color:green"></i> อัพเดทผู้รับผิดชอบโครงการเสร็จสมบูรณ์ !!</h1>
             </div>
             <hr>
-            <a href="index.php" class="btn btn-danger" style="width:100%;"><i class="glyphicon glyphicon-home"></i>&nbsp;กลับสู่หน้าแรก</a>
-        </div>
-        <div class="col-lg-9">
-            <table class="table table-hover table-bordered">
+            <div class="col-lg-3">
+                <div class="well well-lg" style="background-color:#d9edf7;">
+                    <p><strong><u>ผู้รับผิดชอบโครงการ</u></strong></p>
+                    <p><?php echo "รหัสพนักงาน : " . $sale_id . "" ?></p>
+                    <p><?php echo "ชื่อ : " . $sale_name . "" ?></p>
+                </div>
+                <hr>
+                <a href="index.php" class="btn btn-danger" style="width:100%;"><i class="glyphicon glyphicon-home"></i>&nbsp;กลับสู่หน้าแรก</a>
+            </div>
+            <div class="col-lg-9">
+            <div id="table-wrapper">
+                <div id="table-scroll">
+                    <table id="table-1" class="table table-hover table-bordered"  >
+                        <script>
+                            //Fix Thead Table
+                            var tableOffset = $("#table-1").offset().top;
+                            var $header = $("#table-1 > thead").clone();
+                            var $fixedHeader = $("#header-fixed").append($header);
+                            
+                            $(window).bind("scroll", function() {
+                                var offset = $(this).scrollTop();
+                                
+                                if (offset >= tableOffset && $fixedHeader.is(":hidden")) {
+                                    $fixedHeader.show();
+                                }
+                                else if (offset < tableOffset) {
+                                    $fixedHeader.hide();
+                                }
+                            });
+                        </script>
+                    <thead>
+                        <tr class="active">
+                            <th>Location_code</th>
+                            <th>ชื่อโครงการ</th>
+                            <th>ผู้จัดสรรโครงการ</th>
+                            <th>จังหวัด</th>
+                            <th>เขต/อำเภอ</th>
+                            <th>ประเภท</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    
+                    <?php
+                    if (!empty($project_id)) {
 
-                <tr class="active">
-                    <th>Location_code</th>
-                    <th>ชื่อโครงการ</th>
-                    <th>ผู้จัดสรรโครงการ</th>
-                    <th>จังหวัด</th>
-                    <th>เขต/อำเภอ</th>
-                    <th>ประเภท</th>
-                </tr>
+                        for ($i = 0; $i < count($project_id); $i++) {
+                            $sql = "SELECT * FROM project WHERE id='$project_id[$i]'";
+                            $query = mysqli_query($conn, $sql);
 
+                            while ($row = mysqli_fetch_assoc($query)) {
+                                ?>
+                                <tr>
+                                    <td>
+                                        <?php echo $row["location_code"]; ?>
+                                    </td>
 
-
-                <?php
-                if (!empty($project_id)) {
-
-                    for ($i = 0; $i < count($project_id); $i++) {
-                        $sql = "SELECT * FROM project WHERE id='$project_id[$i]'";
-                        $query = mysqli_query($conn, $sql);
-
-                        while ($row = mysqli_fetch_assoc($query)) {
-                            ?>
-                            <tr>
-                                <td>
-                                    <?php echo $row["location_code"]; ?>
-                                </td>
-
-                                <td>
-                                    <?php echo $row["project_name"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["builder"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["province"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["district"]; ?>
-                                </td>
-                                <td>
-                                    <?php echo $row["type"]; ?>
-                                </td>
-                            </tr>
-                            <?php
+                                    <td>
+                                        <?php echo $row["project_name"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["builder"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["province"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["district"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["type"]; ?>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
                         }
-                    }
-                } else {
-                    ?>
-                    <tr >
-                        <td colspan="6">ไม่พบข้อมูลผู้รับผิดชอบโครงการ</td>
-                    </tr>
-                <?php } ?> 
+                    } else {
+                        ?>
+                        <tr >
+                            <td colspan="6">ไม่พบข้อมูลผู้รับผิดชอบโครงการ</td>
+                        </tr>
+                    <?php } ?> 
+                    </tbody>
 
-
-            </table>
+                    </table>
+                    <table id="header-fixed"></table>
+                </div>
+            </div>
         </div>
 
         </div>

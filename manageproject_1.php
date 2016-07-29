@@ -57,13 +57,16 @@ $db = new DB();
 	        //Datatable customization
 	        var table = $('#example').DataTable({
 	        	"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-		      	'order': [[1, 'asc']],
+		      	scrollY:   '45vh',
+                        scrollCollapse: true,
+                        paging: false,
 		      	'columnDefs': [{
 		            'targets': 0,
 		            'searchable': false,
 		            'orderable': false,
 		            'width': '1%'
-		         }]
+		         }],
+                         'order': [[1, 'asc']],
 	    	});
 	    	
 	  	});
@@ -98,7 +101,7 @@ $db = new DB();
 
 	 ?>
     <form action="update_manageproject.php" method="post" role="form" autocomplete="off"  accept-charset="utf-8">
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-bottom:40px;display:block;">
             <div class="row">
                 <div class="panel-group animated fadeIn" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-warning margin-side" >

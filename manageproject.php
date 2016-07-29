@@ -95,8 +95,8 @@
       // Datatable Function
       var table = $('#example').DataTable({
       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-      scrollY:   '50vh',
-                        scrollCollapse: false,
+                        scrollY:   '45vh',
+                        scrollCollapse: true,
                         paging: false,
                         "stateSave": true,
                         'columnDefs': [{
@@ -132,7 +132,7 @@
 
     include_once('header.php');
 
-    $sql = "SELECT * FROM project where status = '0' ";
+    $sql = "SELECT * FROM project where status = '0' and sale_personal_id = '' OR sale_personal_id = 'admin00' ";
     $query = $db->query($sql);
     $query = $db->bind(":status","0");
     $query = $db->execute();

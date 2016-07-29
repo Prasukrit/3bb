@@ -8,6 +8,33 @@
     include ('./session_validate.php');
     
     $db = new DB();
+    
+    $sql_check_user = "SELECT count(user_email) as user_email FROM sale_user WHERE user_email = '".$_SESSION['ro10app']."'";
+    $check_user = $db->query($sql_check_user);
+    $check_user = $db->execute();
+    $result_check_user = $db->single();
+    //echo $result_check_user["user_email"];
+    if($result_check_user["user_email"] <= 0){
+        $sql_sale_match = "SELECT * FROM rx_user WHERE user_email='" .$_SESSION['ro10app']. "'";
+        $query_sale_match = mysqli_query($conn_sale, $sql_sale_match);
+        $row_sale_match = mysqli_fetch_assoc($query_sale_match);
+        $user_code = $row_sale_match["user_code"];
+        $user_name = $row_sale_match["user_name"];
+        $user_email = $row_sale_match["user_email"];
+        $user_tel = $row_sale_match["user_tel"];
+        $user_role = $row_sale_match["user_role"];
+        $department_id = $row_sale_match["department_ID"];
+        
+        if($row_sale_match_email == $_SESSION['ro10app']){
+            $sql_insert = "INSERT INTO sale_user (user_name, department, user_email, user_tel, user_code, user_role, permission_menu_id) "
+                        . "VALUES ('".$user_name."','".$department_id."', '".$user_email."', '".$user_tel."', "
+                        . "'".$user_code."', '".$user_role."', 'menu_id1'   )";
+            $query_insert = $db->execute($sql_insert);
+            $result_insert = $db->fetch();
+        }
+    }
+    //Check Account Matching
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -151,252 +178,138 @@
   include('header.php');
 
   ?>
+<!--container-->
 <div class="container-fluid">
-  <div class="row">
+    <div class="row">
 
-    <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-warning margin-side" >
-        <div class="panel-heading" role="tab" id="headingOne">
-          <h4 class="panel-title"> <strong>รายการข้อมูลโครงการ</strong>
-            <!--Hide button -->
-            <!--<a class="pull-right" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> <i class="glyphicon glyphicon-minus"></i>
-          </a>-->
-          </h4>
-        </div><!--/panel header-->
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            
-          <!--TABLE-->
-          <div class="row padding-small">
-                <table id="example" class="display table table-striped table-bordered" width="100%" cellspacing="0">
-                    <div class="col-md-6 pull-left">
-                        <?php if(strpos(trim($sale_perrmission_menu),"menu_id5") != ""  ) { ?>
-                        <a href="create_project.php?menu_id=5" class="<?php if ($page == 'create_project.php' || $page =='create_project_update.php' ) { ?>active<?php } ?> create_project dt-button buttons-excel buttons-flash glyphicon glyphicon-plus" >&nbsp;CREATE</a>
-                        <?php } ?>
-                  </div>
-                    <?php
-                          // $sql = "SELECT * FROM project where status = 0";
-                          // $query = mysqli_query($conn, $sql);
-                      $sql = "SELECT * FROM project WHERE sale_personal_id = '".$row_sale_match_id."' and status = '0' ";
-                      $query = $db->query($sql);
-                      $query = $db->execute();
-                      $query = $db->fetch();
-                    ?>
-                  <thead>
-                    <tr class="active">
-                      <th align='center' style="max-width:90px;">Location code</th>
-                      <th align='center' style="max-width:110px;">พิกัด</th>
-                      <th align='center' >ชื่อโครงการ</th>
-                      <th align='center' style="max-width:75px;">เขต/อำเภอ</th>
-                      <th align='center' style="max-width:70px;">จังหวัด</th>       
-                      <th align='center' style="max-width:110px;">ผู้จัดสรรโครงการ</th>
-                      <th align='center' style="max-width:75px;">ประเภท</th>
-                      <th align="center" style="width:80px;min-width: 100px" >ดู/แก้ไข/ซ่อน</th>
-                    </tr>
-                    <tr id="search">
-                      <td>Location code</td>
-                      <td>พิกัด</td>
-                      <td>ชื่อโครงการ</td>
-                      <td>เขต/อำเภอ</td>
-                      <td>จังหวัด</td>                    
-                      <td>ผู้จัดสรรโครงการ</td>
-                      <td>ประเภท</td>
-                      <td>แก้ไข/ซ่อน</td>
+        <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-warning margin-side" >
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title"> <strong>รายการข้อมูลโครงการ</strong>
+                        <!--Hide button -->
+                        <!--<a class="pull-right" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> <i class="glyphicon glyphicon-minus"></i>
+                      </a>-->
+                    </h4>
+                </div><!--/panel header-->
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                      foreach ($query as $key => $result) {
-                         
-                        $id = $result["id"];
-                        $location_code = $result["location_code"];
-                        $project_name = $result["project_name"];
-                        $province = $result["province"];
-                        $district =$result["district"];
-                        $address = $result["address"];
-                        $builder = $result["builder"];
-                        $sub_district =  $result["sub_district"];
-                        $location_lat_long = $result["location_lat_long"];
-                        $location_name = $result["location_name"];
-                        $node_nearby = $result["node_nearby"];
-                        $remark =  $result["remark"];
-                        $type = $result["type"];
-                        $status = $result["status"] ;
-                        $sale_id = $result["sale_personal_id"];
+                        <!--TABLE-->
 
-
-                      ?>
-                    <tr>
-
-                      <td>
-                        <?php echo $location_code ?></td>
-                      <td>
-                        <?php echo $location_lat_long ?></td>
-                      <td>
-                        <?php echo $project_name ?></td>
-                      <td>
-                        <?php echo $district ?></td>
-                      <td>
-                        <?php echo $province ?></td>
-                      <td>
-                        <?php echo $builder ?></td>
-                      <td>
-                        <?php echo $type ?></td>
-                      <td>
-                        <?php echo "<a><button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#myModal$id' value='$id'>
-                          <i class='glyphicon glyphicon-eye-open'></i>
-                        </button></a>
-                      " ?>
-                        <?php echo "<a class='btn btn-success btn-xs' href='detail.php?id=$id' ><i class='glyphicon glyphicon-pencil'></i></a>
-                      " ?>
-                      <?php echo "<a class='btn btn-warning btn-xs' href='update-hide.php?status=$status&id=$id' ><i class='glyphicon glyphicon-eye-close'></i></a>
-                    " ?>
-                    
-                  </td>
-                </tr>
-                <!-- Modal -->
-                <div class="modal animated fade " id="myModal<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                  <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">รายละเอียดของ<?php echo $location_code ; ?></h4>
-                      </div>
-                      <div class="modal-body">
-                        <div class="col-xs-3">
-                          <div class="form-group">
-                              <label>ID</label>
-                              <input type="text" class="form-control input-sm" name="id" id="id" readonly value="<?php echo $id; ?>"> 
-                          </div>
-                        </div>
-                        <div class="col-xs-5">
-                          <div class="form-group">
-                              <label>ชื่อโครงการ</label>
-                              <input type="text" class="form-control input-sm" name="project_name" readonly  id="project_name" value="<?php echo $project_name; ?>">
-                          </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="form-group">
-                                <label>ประเภท</label>
-                              <input type="text" class="form-control input-sm" name="type" id="type"  readonly value="<?php echo $type; ?>">
+                        <table id="example" class="display table table-striped table-bordered" width="100%" cellspacing="0">
+                            <div class="col-md-6 pull-left">
+                                <?php if (strpos(trim($sale_perrmission_menu), "menu_id5") != "") { ?>
+                                    <a href="create_project.php?menu_id=5" class="<?php if ($page == 'create_project.php' || $page == 'create_project_update.php') { ?>active<?php } ?> create_project dt-button buttons-excel buttons-flash glyphicon glyphicon-plus" >&nbsp;CREATE</a>
+                                <?php } ?>
                             </div>
-                        </div>
+                            <?php
+                            // $sql = "SELECT * FROM project where status = 0";
+                            // $query = mysqli_query($conn, $sql);
+                            $sql = "SELECT * FROM project WHERE sale_personal_id = '" . $row_sale_match_code . "' and status = '0' ";
+                            $query = $db->query($sql);
+                            $query = $db->execute();
+                            $query = $db->fetch();
+                            ?>
+                            <thead>
+                                <tr class="active">
+                                    <th align='center' style="max-width:90px;">Location code</th>
+                                    <th align='center' style="max-width:110px;">พิกัด</th>
+                                    <th align='center' >ชื่อโครงการ</th>
+                                    <th align='center' style="max-width:75px;">เขต/อำเภอ</th>
+                                    <th align='center' style="max-width:70px;">จังหวัด</th>       
+                                    <th align='center' style="max-width:110px;">ผู้จัดสรรโครงการ</th>
+                                    <th align='center' style="max-width:75px;">ประเภท</th>
+                                    <th align="center" style="width:80px;min-width: 100px" >ดู/แก้ไข/ซ่อน</th>
+                                </tr>
+                                <tr id="search">
+                                    <td>Location code</td>
+                                    <td>พิกัด</td>
+                                    <td>ชื่อโครงการ</td>
+                                    <td>เขต/อำเภอ</td>
+                                    <td>จังหวัด</td>                    
+                                    <td>ผู้จัดสรรโครงการ</td>
+                                    <td>ประเภท</td>
+                                    <td>แก้ไข/ซ่อน</td>
 
-                        <div class="col-xs-4">  
-                          <div class="form-group">
-                              <label>แขวง/ตำบล</label>
-                              <input type="text" class="form-control input-sm" name="sub_district" id="sub_district"  readonly value="<?php echo $sub_district; ?>">   
-                          </div>
-                        </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($query as $key => $result) {
 
-                        <div class="col-xs-4">  
-                          <div class="form-group">
-                              <label>เขต/อำเภอ</label>
-                              <input type="text" class="form-control input-sm" name="district" id="district"  readonly value="<?php echo $district; ?>">   
-                          </div>
-                        </div>
+                                    $id = $result["id"];
+                                    $location_code = $result["location_code"];
+                                    $project_name = $result["project_name"];
+                                    $province = $result["province"];
+                                    $district = $result["district"];
+                                    $address = $result["address"];
+                                    $builder = $result["builder"];
+                                    $sub_district = $result["sub_district"];
+                                    $location_lat_long = $result["location_lat_long"];
+                                    $location_name = $result["location_name"];
+                                    $node_nearby = $result["node_nearby"];
+                                    $remark = $result["remark"];
+                                    $type = $result["type"];
+                                    $status = $result["status"];
+                                    $sale_id = $result["sale_personal_id"];
+                                    $project_unit = $result["project_unit"];
+                                    $contact_name = $result["contact_name"];
+                                    $contact_tel1 = $result["contact_tel1"];
+                                    $contact_tel2 = $result["contact_tel2"];
+                                    ?>
+                                    <tr>
 
-                        <div class="col-xs-4">
-                          <div class="form-group">
-                              <label>จังหวัด</label>
-                              <input type="text" class="form-control input-sm" name="province" id="province"  readonly value="<?php echo $province; ?>">
-                          </div>
-                        </div>
-                        <div class="col-xs-6">
-                          <div class="form-group">
-                                <label>ที่อยู่</label>
-                              <textarea class="form-control input-sm" name="address" readonly ><?php echo $address; ?></textarea>   
-                            </div>
-                        </div>
+                                        <td>
+                                            <?php echo $location_code ?></td>
+                                        <td>
+                                            <?php echo $location_lat_long ?></td>
+                                        <td>
+                                            <?php echo $project_name ?></td>
+                                        <td>
+                                            <?php echo $district ?></td>
+                                        <td>
+                                            <?php echo $province ?></td>
+                                        <td>
+                                            <?php echo $builder ?></td>
+                                        <td>
+                                            <?php echo $type ?></td>
+                                        <td style="text-align: center;">
+                                            <a>
+                                                <button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#myModal<?php echo $id; ?>' value='<?php echo $id; ?>'>
+                                                    <i class='glyphicon glyphicon-eye-open'></i>
+                                                </button>
+                                            </a>
+                                                
+                                            <a class='btn btn-success btn-xs' href='detail.php?id=<?php echo $id; ?>' ><i class='glyphicon glyphicon-pencil'></i></a>
+                                            <a class='btn btn-warning btn-xs' href='update-hide.php?status=<?php echo $status."&id=".$id; ?>' ><i class='glyphicon glyphicon-eye-close'></i></a>
+                                                
+                                        </td>
+                                    </tr>
+                                    <!-- Modal -->
+                                    <?php include ('./modal_projectdetail.php'); ?>
+                                    <!--Modal-->
+                                <?php } ?>
 
-                        <div class="col-xs-6">
-                            <div class="form-group">
-                                <label>หมายเหตุ</label>
-                                <textarea class="form-control input-sm" name="remark" readonly ><?php echo $remark; ?></textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-3">
-                          <div class="form-group">
-                                <label>Location code</label>
-                              <input type="text" class="form-control input-sm" name="location_code" id="location_code"  readonly value="<?php echo $location_code; ?>">   
-                            </div>
-                        </div>
-
-                        <div class="col-xs-4">
-                          <div class="form-group">
-                                <label>พิกัด</label>
-                              <input type="text" class="form-control input-sm" name="location_lat_long" id="location_lat_long"  readonly value="<?php echo $location_lat_long; ?>">   
-                            </div>
-                        </div>
-
-                        <div class="col-xs-5">
-                          <div class="form-group">
-                                <label>ชื่อผู้จัดสรรโครงการ</label>
-                              <input type="text" class="form-control input-sm" name="builder" id="builder"  readonly value="<?php echo $builder; ?>">   
-                            </div>
-                        </div>
-
-                        <div class="col-xs-5">
-                          <div class="form-group">
-                                <label>Node ใกล้เคียง</label>
-                              <input type="text" class="form-control input-sm" name="node_nearby" id="node_nearby"  readonly value="<?php echo $node_nearby; ?>">   
-                            </div>
-                        </div>
-                        <?php 
-                            $user_code = $sale_id; // testdb ของอีกอันนึง
-
-                            // Query ของ portal 
-                            $sql_sale = "SELECT * FROM rx_user where user_code ='".trim($user_code)."' limit 1 ";
-                            $row_sale = mysqli_query($conn_sale, $sql_sale);
-                            while($result = mysqli_fetch_assoc($row_sale)) {
-
-                         ?>
-                        <div class="col-xs-7">
-                          <div class="form-group">
-                                <label>ชื่อผู้รับผิดชอบโครงการ</label>
-                                <input type="text" class="form-control input-sm" name="sale_name" id="sale_name"  readonly <?php if(empty($result["user_code"])){
-                                  echo "value=''";
-                                }else{
-                                  echo "value='".$result["user_name"]."'";
-                                } ?>
-                                >   
-                            </div>
-                        </div>
-                        <?php  }  ?>
-
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">ปิด</button>
-                      </div>
-                    </div>
-                  </div>
-                </div><!--Modal-->
-                <?php } ?>
-
-                </tbody>
-              <tfoot>
-                <tr >
-                  <th align='center' >Location code</th>
-                  <th align='center' >พิกัด</th>
-                  <th align='center' >ชื่อโครงการ</th>
-                  <th align='center' >เขต/อำเภอ</th>
-                  <th align='center' >จังหวัด</th>
-                  <th align='center' >ผู้จัดสรรโครงการ</th>
-                  <th align='center' >ประเภท</th>
-                  <th align="center" >ดู/แก้ไข/ซ่อน</th>
-                </tr>
-              </tfoot>
-
-            </table>
-
+                            </tbody>
+                            <tfoot>
+                                <tr >
+                                    <th align='center' >Location code</th>
+                                    <th align='center' >พิกัด</th>
+                                    <th align='center' >ชื่อโครงการ</th>
+                                    <th align='center' >เขต/อำเภอ</th>
+                                    <th align='center' >จังหวัด</th>
+                                    <th align='center' >ผู้จัดสรรโครงการ</th>
+                                    <th align='center' >ประเภท</th>
+                                    <th align="center" >ดู/แก้ไข/ซ่อน</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div><!--/panel body-->
+                </div>
             </div>
-          </div><!--/panel body-->
-        </div>
-      </div>
-    </div><!--/panel box-->
-  </div><!--/row-->
-</div><!-- /container-->
+        </div><!--/panel box-->
+    </div><!--/row-->
+</div>
+    <!-- /container-->
 </body>
 </html>
